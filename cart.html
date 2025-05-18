@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Shopping Cart</title>
+  <style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body, html {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    .navbar {
+        width: 100%;
+        background-color: #333;
+        color: white;
+        padding: 10px 20px;
+    }
+
+    .navbar h2 {
+        margin: 0;
+    }
+    
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+      padding: 8px;
+    }
+    
+    .btn {
+      padding: 6px 12px;
+      background-color: #337ab7;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 20%;
+      left: 30%;
+      width: 40%;
+      background: white;
+      border: 2px solid #333;
+      padding: 20px;
+      z-index: 1000;
+    }
+
+    .overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 999;
+    }
+
+    .footer {
+        background-color: #333;
+        color: white;
+        text-align: center;
+        padding: 10px;
+        margin-top: 50px;
+        position: static;
+    }
+
+    .footer p {
+        margin: 0;
+    }
+  </style>
+</head>
+<body>
+    <div class="navbar">
+        <h2>Food Ordering System</h2>
+    </div>
+<h2>Menu</h2>
+<table>
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Dishes Name</th>
+      <th>Weight</th>
+      <th>Price</th>
+      <th>Add to Cart</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+        <td>1</td>
+        <td>Chicken Biryani</td>
+        <td>500g</td>
+        <td>Rs.560</td>
+        <td><button class="btn" onclick="openModal('Chicken Biryani', 560)">Add To Cart</button></td>
+    </tr>
+    <tr>
+        <td>2</td>
+        <td>Beef Biryani</td>
+        <td>500g</td>
+        <td>Rs. 460</td>
+        <td><button class="btn" onclick="openModal('Beef Biryani', 460)">Add To Cart</button></td>
+    </tr>
+    <tr>
+        <td>3</td>
+        <td>Mutton Biryani</td>
+        <td>1 KG</td>
+        <td>Rs. 950</td>
+        <td><button class="btn" onclick="openModal('Mutton Biryani', 950)">Add To Cart</button></td>
+    </tr>
+    <tr>
+        <td>4</td>
+        <td>Pulao</td>
+        <td>500g</td>
+        <td>Rs. 550</td>
+        <td><button class="btn" onclick="openModal('Pulao', 550)">Add To Cart</button></td>
+    </tr>
+    <tr>
+        <td>5</td>
+        <td>Nihari</td>
+        <td>500g</td>
+        <td>Rs. 600</td>
+        <td><button class="btn" onclick="openModal('Nihari', 600)">Add To Cart</button></td>
+    </tr>
+    <tr>
+        <td>6</td>
+        <td>Haleem</td>
+        <td>750g</td>
+        <td>Rs. 700</td>
+        <td><button class="btn" onclick="openModal('Haleem', 700)">Add To Cart</button></td>
+    </tr>
+    <tr>
+        <td>7</td>
+        <td>Chapli Kebab</td>
+        <td>250g</td>
+        <td>Rs. 300</td>
+        <td><button class="btn" onclick="openModal('Chapli Kebab', 300)">Add To Cart</button></td>
+    </tr>
+    <tr>
+        <td>8</td>
+        <td>Seekh Kebab</td>
+        <td>250g</td>
+        <td>Rs. 320</td>
+        <td><button class="btn" onclick="openModal('Seekh Kebab', 320)">Add To Cart</button></td>
+    </tr>
+    <tr>
+        <td>9</td>
+        <td>Karahi Chicken</td>
+        <td>1 KG</td>
+        <td>Rs. 850</td>
+        <td><button class="btn" onclick="openModal('Karahi Chicken', 850)">Add To Cart</button></td>
+    </tr>
+    <tr>
+        <td>10</td>
+        <td>Karahi Mutton</td>
+        <td>1 KG</td>
+        <td>Rs. 1200</td>
+        <td><button class="btn" onclick="openModal('Karahi Mutton', 1200)">Add To Cart</button></td>
+    </tr>
+    <tr>
+        <td>11</td>
+        <td>Dum Pukht</td>
+        <td>750g</td>
+        <td>Rs. 950</td>
+        <td><button class="btn" onclick="openModal('Dum Pukht', 950)">Add To Cart</button></td>
+    </tr>
+    <tr>
+        <td>12</td>
+        <td>BBQ Tikka</td>
+        <td>500g</td>
+        <td>Rs. 600</td>
+        <td><button class="btn" onclick="openModal('BBQ Tikka', 600)">Add To Cart</button></td>
+    </tr>
+    <tr>
+        <td>13</td>
+        <td>Malai Boti</td>
+        <td>500g</td>
+        <td>Rs. 620</td>
+        <td><button class="btn" onclick="openModal('Malai Boti', 620)">Add To Cart</button></td>
+    </tr>
+    <tr>
+        <td>14</td>
+        <td>Beef Roll</td>
+        <td>250g</td>
+        <td>Rs. 200</td>
+        <td><button class="btn" onclick="openModal('Beef Roll', 200)">Add To Cart</button></td>
+    </tr>
+    <tr>
+        <td>15</td>
+        <td>Chicken Roll</td>
+        <td>250g</td>
+        <td>Rs. 180</td>
+        <td><button class="btn" onclick="openModal('Chicken Roll', 180)">Add To Cart</button></td>
+    </tr>
+    <tr>
+        <td>16</td>
+        <td>Tandoori Chicken</td>
+        <td>750g</td>
+        <td>Rs. 750</td>
+        <td><button class="btn" onclick="openModal('Tandoori Chicken', 750)">Add To Cart</button></td>
+        </tr>
+    <tr>
+        <td>17</td>
+        <td>Paneer Tikka</td>
+        <td>250g</td>
+        <td>Rs. 400</td>
+        <td><button class="btn" onclick="openModal('Paneer Tikka', 400)">Add To Cart</button></td>
+    </tr>
+    <tr>
+        <td>18</td>
+        <td>Chana Chaat</td>
+        <td>250g</td>
+        <td>Rs. 150</td>
+        <td><button class="btn" onclick="openModal('Chana Chaat', 150)">Add To Cart</button></td>
+    </tr>
+    <tr>
+        <td>19</td>
+        <td>Samosa</td>
+        <td>1 pcs</td>
+        <td>Rs. 40</td>
+        <td><button class="btn" onclick="openModal('Samosa', 40)">Add To Cart</button></td>
+    </tr>
+    <tr>
+        <td>20</td>
+        <td>Pakora</td>
+        <td>300g</td>
+        <td>Rs. 120</td>
+        <td><button class="btn" onclick="openModal('Pakora', 120)">Add To Cart</button></td>
+    </tr>
+    <tr>
+        <td>21</td>
+        <td>Paya</td>
+        <td>500g</td>
+        <td>Rs. 450</td>
+        <td><button class="btn" onclick="openModal('Paya', 450)">Add To Cart</button></td>
+    </tr>
+    <tr>
+        <td>22</td>
+        <td>Fish Fry</td>
+        <td>500g</td>
+        <td>Rs. 700</td>
+        <td><button class="btn" onclick="openModal('Fish Fry', 700)">Add To Cart</button></td>
+    </tr>
+    <tr>
+        <td>23</td>
+        <td>Prawn Masala</td>
+        <td>500g</td>
+        <td>Rs. 950</td>
+        <td><button class="btn" onclick="openModal('Prawn Masala', 950)">Add To Cart</button></td>
+    </tr>
+    <tr>
+        <td>24</td>
+        <td>Shami Kebab</td>
+        <td>4 pcs</td>
+        <td>Rs. 200</td>
+        <td><button class="btn" onclick="openModal('Shami Kebab', 200)">Add To Cart</button></td>
+    </tr>
+    <tr>
+        <td>25</td>
+        <td>Katakat</td>
+        <td>750g</td>
+        <td>Rs. 800</td>
+        <td><button class="btn" onclick="openModal('Katakat', 800)">Add To Cart</button></td>
+    </tr>
+    <tr>
+        <td>26</td>
+        <td>Mutton Ribs</td>
+        <td>750g</td>
+        <td>Rs. 900</td>
+        <td><button class="btn" onclick="openModal('Mutton Ribs', 900)">Add To Cart</button></td>
+    </tr>
+    <tr>
+        <td>27</td>
+        <td>Aloo Gosht</td>
+        <td>500g</td>
+        <td>Rs. 600</td>
+        <td><button class="btn" onclick="openModal('Aloo Gosht', 600)">Add To Cart</button></td>
+    </tr>
+    <tr>
+        <td>28</td>
+        <td>Chicken Handi</td>
+        <td>1 KG</td>
+        <td>Rs. 850</td>
+        <td><button class="btn" onclick="openModal('Chicken Handi', 850)">Add To Cart</button></td>
+    </tr>
+    <tr>
+        <td>29</td>
+        <td>Butter Chicken</td>
+        <td>500g</td>
+        <td>Rs. 700</td>
+        <td><button class="btn" onclick="openModal('Butter Chicken', 700)">Add To Cart</button></td>
+    </tr>
+    <tr>
+        <td>30</td>
+        <td>Chicken Jalfrezi</td>
+        <td>500g</td>
+        <td>Rs. 650</td>
+        <td><button class="btn" onclick="openModal('Chicken Jalfrezi', 650)">Add To Cart</button></td>
+    </tr>
+    <tr>
+        <td>31</td>
+        <td>Beef Kofta</td>
+        <td>500g</td>
+        <td>Rs. 500</td>
+        <td><button class="btn" onclick="openModal('Beef Kofta', 500)">Add To Cart</button></td>
+    </tr>
+    <tr>
+        <td>32</td>
+        <td>Mutton Qorma</td>
+        <td>1 KG</td>
+        <td>Rs. 1100</td>
+        <td><button class="btn" onclick="openModal('Mutton Qorma', 1100)">Add To Cart</button></td>
+    </tr>
+    <tr>
+        <td>33</td>
+        <td>Tawa Chicken</td>
+        <td>500g</td>
+        <td>Rs. 600</td>
+        <td><button class="btn" onclick="openModal('Tawa Chicken', 600)">Add To Cart</button></td>
+    </tr>
+    <tr>
+        <td>34</td>
+        <td>Makhni Handi</td>
+        <td>1 KG</td>
+        <td>Rs. 950</td>
+        <td><button class="btn" onclick="openModal('Makhni Handi', 950)">Add To Cart</button></td>
+    </tr>
+    <tr>
+        <td>35</td>
+        <td>Kunna</td>
+        <td>1 KG</td>
+        <td>Rs. 1000</td>
+        <td><button class="btn" onclick="openModal('Kunna', 1000)">Add To Cart</button></td>
+    </tr>
+    <tr>
+        <td>36</td>
+        <td>Sindhi Biryani</td>
+        <td>1 KG</td>
+        <td>Rs. 700</td>
+        <td><button class="btn" onclick="openModal('Sindhi Biryani', 700)">Add To Cart</button></td>
+    </tr>
+    <tr>
+        <td>37</td>
+        <td>BBQ Platter</td>
+        <td>1.5 KG</td>
+        <td>Rs. 1800</td>
+        <td><button class="btn" onclick="openModal('BQ Platter', 1800)">Add To Cart</button></td>
+    </tr>
+    <tr>
+        <td>38</td>
+        <td>Mix Grill</td>
+        <td>1 KG</td>
+        <td>Rs. 1500</td>
+        <td><button class="btn" onclick="openModal('Mix Grill', 1500)">Add To Cart</button></td>
+    </tr>
+    <tr>
+        <td>39</td>
+        <td>Hyderabadi Biryani</td>
+        <td>1 KG</td>
+        <td>Rs. 750</td>
+        <td><button class="btn" onclick="openModal('Hyderabadi Biryani', 750)">Add To Cart</button></td>
+    </tr>
+    <tr>
+        <td>40</td>
+        <td>Chicken Qeema</td>
+        <td>500g</td>
+        <td>Rs. 550</td>
+        <td><button class="btn" onclick="openModal('Chicken Qeema', 550)">Add To Cart</button></td>
+    </tr>
+    <tr>
+        <td>41</td>
+        <td>Bhuna Gosht</td>
+        <td>750g</td>
+        <td>Rs. 850</td>
+        <td><button class="btn" onclick="openModal('Bhuna Gosht', 850)">Add To Cart</button></td>
+    </tr>
+    <tr>
+        <td>42</td>
+        <td>Anda Curry</td>
+        <td>500g</td>
+        <td>Rs. 400</td>
+        <td><button class="btn" onclick="openModal('Anda Curry', 400)">Add To Cart</button></td>
+    </tr>
+    <tr>
+        <td>43</td>
+        <td>Dal Makhni</td>
+        <td>500g</td>
+        <td>Rs. 300</td>
+        <td><button class="btn" onclick="openModal('Dal Makhni', 300)">Add To Cart</button></td>
+    </tr>
+    <tr>
+        <td>44</td>
+        <td>Rajma Chawal</td>
+        <td>750g</td>
+        <td>Rs. 350</td>
+        <td><button class="btn" onclick="openModal('Rajma Chawal', 350)">Add To Cart</button></td>
+    </tr>
+    <tr>
+        <td>45</td>
+        <td>Baingan Bharta</td>
+        <td>500g</td>
+        <td>Rs. 300</td>
+        <td><button class="btn" onclick="openModal('Baingan Bharta', 300)">Add To Cart</button></td>
+    </tr>
+    <tr>
+        <td>46</td>
+        <td>Gobi Aloo</td>
+        <td>500g</td>
+        <td>Rs. 280</td>
+        <td><button class="btn" onclick="openModal('Gobi Aloo', 280)">Add To Cart</button></td>
+    </tr>
+    <tr>
+        <td>47</td>
+        <td>Vegetable Biryani</td>
+        <td>750g</td>
+        <td>Rs. 400</td>
+        <td><button class="btn" onclick="openModal('Vegetable Biryani', 400)">Add To Cart</button></td>
+    </tr>
+    <tr>
+        <td>48</td>
+        <td>Matar Paneer</td>
+        <td>500g</td>
+        <td>Rs. 450</td>
+        <td><button class="btn" onclick="openModal('Matar Paneer', 450)">Add To Cart</button></td>
+    </tr>
+    <tr>
+        <td>49</td>
+        <td>Zarda</td>
+        <td>500g</td>
+        <td>Rs. 300</td>
+        <td><button class="btn" onclick="openModal('Zarda', 300)">Add To Cart</button></td>
+    </tr>
+    <tr>
+        <td>50</td>
+        <td>Sheer Khurma</td>
+        <td>500g</td>
+        <td>Rs. 350</td>
+        <td><button class="btn" onclick="openModal('Sheer Khurma', 350)">Add To Cart</button></td>
+    </tr>
+    <tr>
+        <td>51</td>
+        <td>Kheer</td>
+        <td>500g</td>
+        <td>Rs. 280</td>
+        <td><button class="btn" onclick="openModal('Kheer', 280)">Add To Cart</button></td>
+    </tr>
+    <tr>
+        <td>52</td>
+        <td>Shahi Tukray</td>
+        <td>400g</td>
+        <td>Rs. 320</td>
+        <td><button class="btn" onclick="openModal('Shahi Tukray', 320)">Add To Cart</button></td>
+    </tr>
+    <tr>
+        <td>53</td>
+        <td>Ras Malai</td>
+        <td>6 pcs</td>
+        <td>Rs. 500</td>
+        <td><button class="btn" onclick="openModal('Ras Malai', 500)">Add To Cart</button></td>
+    </tr>
+    <tr>
+        <td>54</td>
+        <td>Gajar Ka Halwa</td>
+        <td>500g</td>
+        <td>Rs. 350</td>
+        <td><button class="btn" onclick="openModal('Gajar Ka Halwa', 350)">Add To Cart</button></td>
+    </tr>
+    <tr>
+        <td>55</td>
+        <td>Fruit Trifle</td>
+        <td>500g</td>
+        <td>Rs. 380</td>
+        <td><button class="btn" onclick="openModal('Fruit Trifle', 380)">Add To Cart</button></td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Overlay and Modal -->
+<div class="overlay" id="overlay"></div>
+<div class="modal" id="modal">
+  <h3>Add to Cart</h3>
+  <p><strong>Dish:</strong> <span id="modalDishName"></span></p>
+  <p><strong>Price:</strong> Rs. <span id="modalDishPrice"></span></p>
+  <label>Quantity:
+    <input type="number" id="modalQty" value="1" min="1">
+  </label><br><br>
+  <button class="btn" onclick="addToCart()">Add</button>
+  <button class="btn" style="background:#888;" onclick="closeModal()">Cancel</button>
+</div>
+
+<br><br>
+<h2>Cart</h2>
+<table id="cartTable">
+  <thead>
+    <tr>
+      <th>Dish Name</th>
+      <th>Quantity</th>
+      <th>Price</th>
+      <th>Total</th>
+    </tr>
+  </thead>
+  <tbody id="cartBody">
+  </tbody>
+</table>
+
+<script>
+  let currentDish = '';
+  let currentPrice = 0;
+
+  function openModal(dish, price) {
+    currentDish = dish;
+    currentPrice = price;
+    document.getElementById("modalDishName").textContent = dish;
+    document.getElementById("modalDishPrice").textContent = price;
+    document.getElementById("modalQty").value = 1;
+
+    document.getElementById("modal").style.display = 'block';
+    document.getElementById("overlay").style.display = 'block';
+  }
+
+  function closeModal() {
+    document.getElementById("modal").style.display = 'none';
+    document.getElementById("overlay").style.display = 'none';
+  }
+
+  function addToCart() {
+    const qty = parseInt(document.getElementById("modalQty").value);
+    const total = currentPrice * qty;
+
+    const tableBody = document.getElementById("cartBody");
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${currentDish}</td>
+      <td>${qty}</td>
+      <td>Rs. ${currentPrice}</td>
+      <td>Rs. ${total}</td>
+    `;
+    tableBody.appendChild(row);
+
+    closeModal();
+  }
+</script>
+<div class="footer">
+    <p>&copy; 2023 Desi Rasoi. All rights reserved.</p>
+    <p>Contact: +92333-1234567 | +923320987654</p> 
+    <p>Email: dasirasoireturant@gmail.com</p>
+    <p>Address: 123 Food Street, Rawalpindi, Pakistan</p>
+    <p>Website: www.dasirasoi.com</p>
+</div>
+</body>
+</html>

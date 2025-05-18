@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="bootstrap-3.4.1-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Order Management</title>
+    <style>
+        body {
+            background-image: url('images/15.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 24px;
+        
+        }
+
+        .container {
+            margin: 50px auto;
+            max-width: 700px;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        label {
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .form-control {
+            margin-bottom: 15px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 6px rgba(0, 123, 255, 0.4);
+        }
+
+        .btn {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-weight: bold;
+            border-radius: 6px;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: static;
+            bottom: 0;
+            width: 100%;
+            font-size: 14px;
+        }
+    </style>
+<script>
+    function toggleTransactionID() {
+        var paymentMethod = document.getElementById("payment_mtd").value;
+        var transactionField = document.getElementById("transaction_id_field");
+
+        if (paymentMethod === "Credit Card" || paymentMethod === "Debit Card") {
+            transactionField.classList.remove("hidden");
+        } else {
+            transactionField.classList.add("hidden");
+        }
+    }
+</script>
+</head>
+<body>
+    <div class="navbar">
+        <h2>Order Management</h2>
+    </div>
+    <div class="container">
+        <label for="orderid">Order ID:</label>
+        <input type="text" id="orderId" class="form-control" placeholder="Enter Order ID">
+
+        <label for="customerid">Customer ID:</label>
+        <input type="text" id="customerid" class="form-control" placeholder="Enter Customer ID">
+
+        <label for="customername">Customer Name:</label>
+        <input type="text" id="customerName" class="form-control" placeholder="Enter Customer Name">
+
+        <label for="orderdate">Order Date:</label>
+        <input type="date" id="orderDate" class="form-control">
+
+        <label for="address">Address:</label>
+        <input type="text" id="address" class="form-control" placeholder="Enter Address">
+
+        <label for="quantity">Quantity:</label>
+        <input type="number" id="quantity" class="form-control" placeholder="Enter Quantity">
+
+        <label for="product">Product:</label>
+        <input type="text" id="product" class="form-control" placeholder="Enter Product Name">
+
+        <label for="price">Price:</label>
+        <input type="number" id="price" class="form-control" placeholder="Enter Price">
+
+        <label for="delivery">Delivery:</label>
+        <select id="delivery" class="form-control">
+            <option value="Home Delivery">Home Delivery</option>
+            <option value="PickUP">PickUP</option>
+        </select>
+
+        <label for="payment_mtd">Payment:</label>
+        <select id="payment_mtd" name="payment_mtd" onchange="toggleTransactionID()">
+            <option value="Cash">Cash</option>
+            <option value="Credit Card">Credit Card</option>
+            <option value="Debit Card">Debit Card</option>
+        </select>
+
+         <div id="transaction_id_field" class="hidden">
+            <label for="trns_id">Transaction ID:</label>
+            <input type="text" id="trns_id" class="form-control" placeholder="Enter Transaction Id">
+        </div><br>
+        <button type="submit" class="btn btn-primary">Submit Order</button>
+    </div>
+    <div class="footer">
+        <p>&copy; 2023 Desi Rasoi. All rights reserved.</p>
+        <p>Contact: +92333-1234567 | +923320987654</p> 
+        <p>Email: dasirasoireturant@gmail.com</p>
+        <p>Address: 123 Food Street, Rawalpindi, Pakistan</p>
+        <p>Website: www.dasirasoi.com</p>
+    </div>
+</body>
+</html>        

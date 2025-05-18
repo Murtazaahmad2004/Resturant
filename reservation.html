@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="bootstrap-3.4.1-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <title>Reservations Management</title>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            background-image: url('images/16.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        .navbar {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .navbar h2 {
+            margin: 0;
+        }
+
+        .container {
+            margin: 50px auto;
+            max-width: 700px;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        label {
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .form-control {
+            margin-bottom: 15px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 6px rgba(0, 123, 255, 0.4);
+        }
+
+        .btn {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-weight: bold;
+            border-radius: 6px;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: static;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .footer p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h2>Reservations Management</h2>
+    </div>
+
+    <div class="container">
+        <label for="name">Name:</label>
+        <input type="text" id="name" class="form-control" placeholder="Enter Your Name" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" class="form-control" placeholder="Enter Your Email" required>
+
+        <label for="phone">Phone:</label>
+        <input type="tel" id="phone" class="form-control" placeholder="Enter Your Phone Number" required>
+
+        <label for="date">Reservation Date:</label>
+        <input type="date" id="date" class="form-control" required>
+
+        <label for="time">Reservation Time:</label>
+        <input type="time" id="time" class="form-control" required>
+
+        <label for="guests">Number of Guests:</label>
+        <input type="number" id="guests" class="form-control" placeholder="Enter Number of Guests" required>
+
+        <label>Special Requests:</label><br>
+        <input type="checkbox" name="requests[]" value="Wheelchair Access"> Wheelchair Access
+        <input type="checkbox" name="requests[]" value="Window Seat"> Prefer Window Seat
+        <input type="checkbox" name="requests[]" value="Quiet Area"> Prefer Quiet Area
+        <input type="checkbox" name="requests[]" value="High Chair"> Need High Chair
+        <input type="checkbox" name="requests[]" value="Celebration"> Celebrating a Special Occasion<br><br>
+
+        <label>Other Requests:</label><br>
+        <textarea name="other_requests" placeholder="Type any additional requests..."></textarea><br></br>
+
+        <label for="payment">Payment Method:</label>
+        <select id="payment" class="form-control">
+            <option value="credit_card">Credit Card</option>
+            <option value="debit_card">Debit Card</option>
+            <option value="cash">Cash</option>
+        </select>
+
+        <label for="amount">Amount:</label>
+        <input type="number" id="amount" class="form-control" placeholder="Enter Amount" required>
+
+        <label for="status">Reservation Status:</label>
+        <select id="status" class="form-control">
+            <option value="confirmed">Confirmed</option>
+            <option value="pending">Pending</option>
+            <option value="cancelled">Cancelled</option>
+        </select>
+
+        <button type="submit" class="btn btn-primary">Submit Reservation</button>
+        <button type="button" class="btn btn-danger" onclick="window.location.href='reservation.html'">Cancel</button>
+    </div>
+    <div class="footer">
+        <p>&copy; 2023 Desi Rasoi. All rights reserved.</p>
+        <p>Contact: +92333-1234567 | +923320987654</p> 
+        <p>Email: dasirasoireturant@gmail.com</p>
+        <p>Address: 123 Food Street, Rawalpindi, Pakistan</p>
+        <p>Website: www.dasirasoi.com</p>
+    </div>
+</body>
+</html>
