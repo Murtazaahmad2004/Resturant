@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="bootstrap-3.4.1-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Reservations Management</title>
     <style>
         body {
@@ -79,16 +80,26 @@
             background-color: #333;
             color: white;
             text-align: center;
-            padding: 10px 0;
+            padding: 10px;
+            margin-top: 50px;
             position: static;
-            bottom: 0;
-            width: 100%;
         }
 
         .footer p {
-            margin: 5px 0;
+            margin: 0;
         }
     </style>
+    <script>
+        function toggleTransactionID() {
+            var paymentMethod = document.getElementById("payment").value;
+            var transactionIDField = document.getElementById("transaction_id_field");
+            if (paymentMethod === "credit_card" || paymentMethod === "debit_card") {
+                transactionIDField.classList.remove("hidden");
+            } else {
+                transactionIDField.classList.add("hidden");
+            }
+        }
+    </script>
 </head>
 <body>
     <div class="navbar">
@@ -115,22 +126,27 @@
         <input type="number" id="guests" class="form-control" placeholder="Enter Number of Guests" required>
 
         <label>Special Requests:</label><br>
-        <input type="checkbox" name="requests[]" value="Wheelchair Access"> Wheelchair Access
-        <input type="checkbox" name="requests[]" value="Window Seat"> Prefer Window Seat
-        <input type="checkbox" name="requests[]" value="Quiet Area"> Prefer Quiet Area
-        <input type="checkbox" name="requests[]" value="High Chair"> Need High Chair
+        <input type="checkbox" name="requests[]" value="Wheelchair Access"> Wheelchair Access<br><br>
+        <input type="checkbox" name="requests[]" value="Window Seat"> Prefer Window Seat<br><br>
+        <input type="checkbox" name="requests[]" value="Quiet Area"> Prefer Quiet Area<br><br>
+        <input type="checkbox" name="requests[]" value="High Chair"> Need High Chair<br><br>
         <input type="checkbox" name="requests[]" value="Celebration"> Celebrating a Special Occasion<br><br>
 
         <label>Other Requests:</label><br>
         <textarea name="other_requests" placeholder="Type any additional requests..."></textarea><br></br>
 
         <label for="payment">Payment Method:</label>
-        <select id="payment" class="form-control">
+        <select id="payment" class="form-control" onchange="toggleTransactionID()">
+            <option value="cash">Cash</option>
             <option value="credit_card">Credit Card</option>
             <option value="debit_card">Debit Card</option>
-            <option value="cash">Cash</option>
         </select>
 
+        <div id="transaction_id_field" class="hidden">
+            <label for="trns_id">Transaction ID:</label>
+            <input type="text" id="trns_id" class="form-control" placeholder="Enter Transaction Id">
+        </div>
+        
         <label for="amount">Amount:</label>
         <input type="number" id="amount" class="form-control" placeholder="Enter Amount" required>
 
@@ -140,16 +156,20 @@
             <option value="pending">Pending</option>
             <option value="cancelled">Cancelled</option>
         </select>
-
-        <button type="submit" class="btn btn-primary">Submit Reservation</button>
+        <button type="submit" class="btn btn-primary" onclick="window.location.href='#'">Submit Reservation</button>
         <button type="button" class="btn btn-danger" onclick="window.location.href='reservation.html'">Cancel</button>
     </div>
     <div class="footer">
         <p>&copy; 2023 Desi Rasoi. All rights reserved.</p>
-        <p>Contact: +92333-1234567 | +923320987654</p> 
+        <p>Contact: +92333-1234567</p>
+        <p>WhatsApp: +92332-0987654</p> 
         <p>Email: dasirasoireturant@gmail.com</p>
         <p>Address: 123 Food Street, Rawalpindi, Pakistan</p>
         <p>Website: www.dasirasoi.com</p>
+        <p>Follow us on social media: 
+            <a href="https://www.facebook.com/dasirasoi">Facebook</a> | 
+            <a href="https://www.instagram.com/dasirasoi">Instagram</a>
+        </p>
     </div>
 </body>
 </html>

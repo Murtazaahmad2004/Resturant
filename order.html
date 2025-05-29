@@ -76,11 +76,13 @@
             background-color: #333;
             color: white;
             text-align: center;
-            padding: 10px 0;
+            padding: 10px;
+            margin-top: 50px;
             position: static;
-            bottom: 0;
-            width: 100%;
-            font-size: 14px;
+        }
+
+        .footer p {
+            margin: 0;
         }
     </style>
 <script>
@@ -131,6 +133,16 @@
             <option value="PickUP">PickUP</option>
         </select>
 
+        <label for="payment_sts">Payment Status</label>
+        <select id="payment_sts" class="form-control">
+            <option value="confirmed">Confirmed</option>
+            <option value="pending">Pending</option>
+            <option value="cancelled">Cancelled</option>
+        </select>
+
+        <label for="promo_code">Promo Code:</label>
+        <input type="text" id="promo_code" class="form-control" placeholder="Enter Promo Code">
+        
         <label for="payment_mtd">Payment:</label>
         <select id="payment_mtd" name="payment_mtd" onchange="toggleTransactionID()">
             <option value="Cash">Cash</option>
@@ -138,18 +150,24 @@
             <option value="Debit Card">Debit Card</option>
         </select>
 
-         <div id="transaction_id_field" class="hidden">
+        <div id="transaction_id_field" class="hidden">
             <label for="trns_id">Transaction ID:</label>
             <input type="text" id="trns_id" class="form-control" placeholder="Enter Transaction Id">
         </div><br>
-        <button type="submit" class="btn btn-primary">Submit Order</button>
+
+        <button type="submit" class="btn btn-primary" onclick="window.location.href='#'">Submit Order</button>
     </div>
     <div class="footer">
         <p>&copy; 2023 Desi Rasoi. All rights reserved.</p>
-        <p>Contact: +92333-1234567 | +923320987654</p> 
+        <p>Contact: +92333-1234567</p>
+        <p>WhatsApp: +92332-0987654</p> 
         <p>Email: dasirasoireturant@gmail.com</p>
         <p>Address: 123 Food Street, Rawalpindi, Pakistan</p>
         <p>Website: www.dasirasoi.com</p>
+        <p>Follow us on social media: 
+            <a href="https://www.facebook.com/dasirasoi">Facebook</a> | 
+            <a href="https://www.instagram.com/dasirasoi">Instagram</a>
+        </p>
     </div>
 </body>
-</html>        
+</html>
