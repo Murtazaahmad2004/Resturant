@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Reviews Screen</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .signup-container {
+            width: 90%;
+            max-width: 400px;
+            height: 600px;
+            padding: 30px;
+            margin-left: 40%;
+            margin-top: 3%;
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            overflow-y: auto;
+        }
+
+        h1 {
+            margin-top: 3em;
+            font-size: 1.8em;
+            color: gray;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        form label {
+            align-self: flex-start;
+            margin: 10px 0 5px;
+            font-size: 1em;
+            color: #555;
+        }
+
+        form input, form select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        form button {
+            width: 50%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        form button:hover {
+            transform: scale(1.03);
+        }
+
+        form a {
+            color: black;
+            text-decoration: none;
+        }
+
+        .btn {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-weight: bold;
+            border-radius: 6px;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+
+        .navbar {
+            background-color: #333;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            color: white;
+            width: 100%;
+        }
+
+        .navbar h1 {
+            margin: 0;
+            text-align: center;
+            color: white;
+        }
+
+        .footer {
+            background-color: #333;
+            padding: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: white;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .footer p {
+           margin: 0;
+        }
+
+        .footer a {
+            color: #387cd4;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h1>Reviews</h1>
+    </div>
+    <div class="signup-container">
+        <h1>Reviews</h1>
+        <form method="POST">
+            <label for="c_name">Customer Name:</label>
+            <input type="text" id="c_name" name="c_name" placeholder="Enter Customer Name" required>
+            <label for="remarks">Report and FeedBack of Our Services:</label>
+            <textarea id="remarks" name="remarks"></textarea>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+    <div class="footer">
+        <p>&copy; 2023 Desi Rasoi. All rights reserved.</p>
+        <p>Contact: +92333-1234567</p>
+        <p>WhatsApp: +92332-0987654</p> 
+        <p>Email: dasirasoireturant@gmail.com</p>
+        <p>Address: 123 Food Street, Rawalpindi, Pakistan</p>
+        <p>Website: www.dasirasoi.com</p>
+        <p>Follow us on social media: 
+            <a href="https://www.facebook.com/dasirasoi">Facebook</a> | 
+            <a href="https://www.instagram.com/dasirasoi">Instagram</a>
+        </p>
+    </div>
+</body>
+</html>

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <title>Admin Login</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            margin: 60px auto;
+            max-width: 400px;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            text-align: center;
+            color: gray;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        .form-control {
+            margin-bottom: 15px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        .form-control:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 6px rgba(0, 123, 255, 0.4);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 10px;
+            font-weight: bold;
+            border-radius: 6px;
+        }
+
+        .navbar {
+            background-color: #333;
+            padding: 10px;
+            text-align: center;
+            font-size: 24px;
+        }
+
+        .navbar h1 {
+            margin: 0;
+            color: white;
+        }
+
+        .footer {
+            background-color: #333;
+            padding: 20px;
+            text-align: center;
+            font-size: 14px;
+            color: white;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .footer p {
+           margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <h1>Admin Panel</h1>
+    </div>
+    <div class="container">
+        <h1>Admin Login</h1>
+        <form method="post">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" placeholder="Enter Username" class="form-control">
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="Enter YOur Password" class="form-control">
+
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+    </div>
+    <div class="footer">
+        <p>&copy; 2023 Desi Rasoi. All rights reserved.</p>
+        <p>Contact: +92333-1234567</p>
+        <p>WhatsApp: +92332-0987654</p> 
+        <p>Email: dasirasoireturant@gmail.com</p>
+        <p>Address: 123 Food Street, Rawalpindi, Pakistan</p>
+        <p>Website: www.dasirasoi.com</p>
+        <p>Follow us on social media: 
+            <a href="https://www.facebook.com/dasirasoi">Facebook</a> | 
+            <a href="https://www.instagram.com/dasirasoi">Instagram</a>
+        </p>
+    </div>
+</body>
+</html>
