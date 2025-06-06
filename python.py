@@ -62,6 +62,5 @@ def order():
     return render_template('order.html')
 
 # Database Connection
-
 if __name__ == '__main__':
     app.run(debug=True)
