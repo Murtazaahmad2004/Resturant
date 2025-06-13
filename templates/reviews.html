@@ -9,13 +9,13 @@
             box-sizing: border-box;
         }
 
-        .signup-container {
+        .container {
             width: 90%;
             max-width: 400px;
             height: 600px;
             padding: 30px;
             margin-left: 40%;
-            margin-top: 3%;
+            margin-top: 100px;
             border-radius: 10px;
             background-color: rgba(255, 255, 255, 0.95);
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
@@ -89,10 +89,15 @@
 
         .navbar {
             background-color: #333;
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
             color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 24px;
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
+            z-index: 1000;
         }
 
         .navbar h1 {
@@ -126,7 +131,7 @@
     <div class="navbar">
         <h1>Reviews</h1>
     </div>
-    <div class="signup-container">
+    <div class="container">
         <h1>Reviews</h1>
         <form method="POST">
             <label for="c_name">Customer Name:</label>

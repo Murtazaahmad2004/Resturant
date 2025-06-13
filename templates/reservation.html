@@ -23,6 +23,12 @@
             color: white;
             padding: 10px;
             text-align: center;
+            font-size: 24px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
         }
 
         .navbar h2 {
@@ -30,7 +36,7 @@
         }
 
         .container {
-            margin: 50px auto;
+            margin-top: 100px;
             max-width: 700px;
             padding: 30px;
             background-color: rgba(255, 255, 255, 0.95);
@@ -111,24 +117,24 @@
         <label for="email">Email:</label>
         <input type="email" id="email" class="form-control" placeholder="Enter Your Email" required>
 
-        <label for="phone">Phone:</label>
-        <input type="tel" id="phone" class="form-control" placeholder="Enter Your Phone Number" required>
+        <label for="phone">Phone No:</label>
+        <input type="number" id="phone" class="form-control" placeholder="Enter Your Phone Number" required>
 
-        <label for="date">Reservation Date:</label>
-        <input type="date" id="date" class="form-control" required>
+        <label for="reservation_date">Reservation Date:</label>
+        <input type="date" id="reservation_date" class="form-control" required>
 
-        <label for="time">Reservation Time:</label>
-        <input type="time" id="time" class="form-control" required>
+        <label for="reservation_time">Reservation Time:</label>
+        <input type="time" id="reservation_time" class="form-control" required>
 
         <label for="guests">Number of Guests:</label>
         <input type="number" id="guests" class="form-control" placeholder="Enter Number of Guests" required>
 
-        <label>Special Requests:</label><br>
-        <input type="checkbox" name="requests[]" value="Wheelchair Access"> Wheelchair Access<br><br>
-        <input type="checkbox" name="requests[]" value="Window Seat"> Prefer Window Seat<br><br>
-        <input type="checkbox" name="requests[]" value="Quiet Area"> Prefer Quiet Area<br><br>
-        <input type="checkbox" name="requests[]" value="High Chair"> Need High Chair<br><br>
-        <input type="checkbox" name="requests[]" value="Celebration"> Celebrating a Special Occasion<br><br>
+        <label>Special Request:</label><br>
+        <input type="checkbox" name="special_requests" value="Wheelchair Access"> Wheelchair Access<br><br>
+        <input type="checkbox" name="special_requests" value="Window Seat"> Prefer Window Seat<br><br>
+        <input type="checkbox" name="special_requests" value="Quiet Area"> Prefer Quiet Area<br><br>
+        <input type="checkbox" name="special_requests" value="High Chair"> Need High Chair<br><br>
+        <input type="checkbox" name="special_requests" value="Celebration"> Celebrating a Special Occasion<br><br>
 
         <label>Other Requests:</label><br>
         <textarea name="other_requests" placeholder="Type any additional requests..."></textarea><br></br>
@@ -154,8 +160,8 @@
             <option value="pending">Pending</option>
             <option value="cancelled">Cancelled</option>
         </select>
-        <button type="submit" class="btn btn-primary" onclick="window.location.href='#'">Submit Reservation</button>
-        <button type="button" class="btn btn-danger" onclick="window.location.href='reservation.html'">Cancel</button>
+        <button type="submit" class="btn btn-primary">Submit Reservation</button>
+        <button type="button" class="btn btn-danger">Cancel</button>
     </div>
     <div class="footer">
         <p>&copy; 2023 Desi Rasoi. All rights reserved.</p>
