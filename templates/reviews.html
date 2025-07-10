@@ -133,7 +133,13 @@
     </div>
     <div class="container">
         <h1>Reviews</h1>
-        <form method="POST">
+        {% if error %}
+            <div class="alert alert-danger">{{ error }}</div>
+        {% endif %}
+        {% if success %}
+            <div class="alert alert-success">{{ success }}</div>
+        {% endif %}
+        <form method="POST" action="/reviews">
             <label for="c_name">Customer Name:</label>
             <input type="text" id="c_name" name="c_name" placeholder="Enter Customer Name" required>
             <label for="remarks">Report and FeedBack of Our Services:</label>
@@ -143,8 +149,7 @@
     </div>
     <div class="footer">
         <p>&copy; 2023 Desi Rasoi. All rights reserved.</p>
-        <p>Contact: +92333-1234567</p>
-        <p>WhatsApp: +92332-0987654</p> 
+        <p>Contact: +92333-1234567 | WhatsApp: +92332-0987654</p>
         <p>Email: dasirasoireturant@gmail.com</p>
         <p>Address: 123 Food Street, Rawalpindi, Pakistan</p>
         <p>Website: www.dasirasoi.com</p>

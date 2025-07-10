@@ -2,20 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <title>Reservations Management</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         body {
-            background-image: url('static/images/16.jpeg');
+            background-image: url('/static/images/16.jpeg');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
         }
 
         .navbar {
@@ -24,56 +21,18 @@
             padding: 10px;
             text-align: center;
             font-size: 24px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-        }
-
-        .navbar h2 {
-            margin: 0;
         }
 
         .container {
-            margin-top: 100px;
-            max-width: 700px;
+            margin-top: 20px;
+            max-width: 500px;
+            background: rgba(255, 255, 255, 0.95);
             padding: 30px;
-            background-color: rgba(255, 255, 255, 0.95);
             border-radius: 12px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        label {
-            font-weight: 600;
-            margin-top: 10px;
         }
 
         .form-control {
             margin-bottom: 15px;
-            border-radius: 6px;
-            border: 1px solid #ccc;
-        }
-
-        .form-control:focus {
-            border-color: #007bff;
-            box-shadow: 0 0 6px rgba(0, 123, 255, 0.4);
-        }
-
-        .btn {
-            margin-top: 10px;
-            padding: 10px 20px;
-            font-weight: bold;
-            border-radius: 6px;
-        }
-
-        .btn-primary {
-            background-color: #007bff;
-            border: none;
-        }
-
-        .btn-primary:hover {
-            background-color: #0056b3;
         }
 
         .hidden {
@@ -103,70 +62,91 @@
                 transactionIDField.classList.add("hidden");
             }
         }
+
+        function updateAmount() {
+            var guests = document.getElementById("guests").value;
+            var amountField = document.getElementById("amount");
+            var amountPerGuest = 3200;
+            if (guests) {
+                amountField.value = guests * amountPerGuest;
+            } else {
+                amountField.value = '';
+            }
+        }
     </script>
 </head>
 <body>
     <div class="navbar">
         <h2>Reservations Management</h2>
     </div>
-
     <div class="container">
-        <label for="name">Name:</label>
-        <input type="text" id="name" class="form-control" placeholder="Enter Your Name" required>
+        {% if error %}
+            <div class="alert alert-danger">{{ error }}</div>
+        {% endif %}
+        {% if success %}
+            <div class="alert alert-success">{{ success }}</div>
+        {% endif %}
+        <form method="POST" action="/reservation">
+            <label for="res_id">Reservation ID:</label>
+            <input type="text" id="res_id" name="res_id" class="form-control" value="{{ res_id }}" readonly>
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" class="form-control" placeholder="Enter Your Email" required>
+            <label for="name">Customer Name:</label>
+            <input type="text" id="name" name="name" class="form-control" placeholder="Enter your Name" required>
 
-        <label for="phone">Phone No:</label>
-        <input type="number" id="phone" class="form-control" placeholder="Enter Your Phone Number" required>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" class="form-control" placeholder="Enter your Email" required>
 
-        <label for="reservation_date">Reservation Date:</label>
-        <input type="date" id="reservation_date" class="form-control" required>
+            <label for="phone">Phone No:</label>
+            <input type="number" id="phone" name="phone" class="form-control" placeholder="Enter Phoe Number" required>
 
-        <label for="reservation_time">Reservation Time:</label>
-        <input type="time" id="reservation_time" class="form-control" required>
+            <label for="reservation_date">Reservation Date:</label>
+            <input type="date" id="reservation_date" name="reservation_date" class="form-control" required>
 
-        <label for="guests">Number of Guests:</label>
-        <input type="number" id="guests" class="form-control" placeholder="Enter Number of Guests" required>
+            <label for="reservation_time">Reservation Time:</label>
+            <input type="time" id="reservation_time" name="reservation_time" class="form-control" required>
 
-        <label>Special Request:</label><br>
-        <input type="checkbox" name="special_requests" value="Wheelchair Access"> Wheelchair Access<br><br>
-        <input type="checkbox" name="special_requests" value="Window Seat"> Prefer Window Seat<br><br>
-        <input type="checkbox" name="special_requests" value="Quiet Area"> Prefer Quiet Area<br><br>
-        <input type="checkbox" name="special_requests" value="High Chair"> Need High Chair<br><br>
-        <input type="checkbox" name="special_requests" value="Celebration"> Celebrating a Special Occasion<br><br>
+            <label for="guests">Number of Guests:</label>
+            <input type="number" id="guests" name="guests" class="form-control" placeholder="Enter No. of Guests" required oninput="updateAmount()">
 
-        <label>Other Requests:</label><br>
-        <textarea name="other_requests" placeholder="Type any additional requests..."></textarea><br></br>
+            <label>Special Requests:</label><br>
+            <input type="checkbox" name="special_requests" value="Wheelchair Access"> Wheelchair Access<br>
+            <input type="checkbox" name="special_requests" value="Window Seat"> Window Seat<br>
+            <input type="checkbox" name="special_requests" value="Quiet Area"> Quiet Area<br>
+            <input type="checkbox" name="special_requests" value="High Chair"> High Chair<br>
+            <input type="checkbox" name="special_requests" value="Celebration"> Celebration<br>
+            <input type="checkbox" name="special_requests" value="Nill"> Nill<br>
 
-        <label for="payment">Payment Method:</label>
-        <select id="payment" class="form-control" onchange="toggleTransactionID()">
-            <option value="cash">Cash</option>
-            <option value="credit_card">Credit Card</option>
-            <option value="debit_card">Debit Card</option>
-        </select>
+            <label for="other_request">Other Requests:</label>
+            <textarea name="other_request" class="form-control" placeholder="Type any additional requests..."></textarea>
 
-        <div id="transaction_id_field" class="hidden">
-            <label for="trns_id">Transaction ID:</label>
-            <input type="text" id="trns_id" class="form-control" placeholder="Enter Transaction Id">
-        </div>
-        
-        <label for="amount">Amount:</label>
-        <input type="number" id="amount" class="form-control" placeholder="Enter Amount" required>
+            <label for="payment">Payment Method:</label>
+            <select id="payment" name="payment" class="form-control" onchange="toggleTransactionID()">
+                <option value="Cash">Cash On Delivery</option>
+                <option value="Credit Card">Credit Card</option>
+                <option value="Debit Card">Debit Card</option>
+                <option value="Jazz Cash">Jazz Cash</option>
+                <option value="EasyPaisa">EasyPaisa</option>
+            </select>
 
-        <label for="status">Reservation Status:</label>
-        <select id="status" class="form-control">
-            <option value="confirmed">Confirmed</option>
-            <option value="pending">Pending</option>
-            <option value="cancelled">Cancelled</option>
-        </select>
-        <button type="submit" class="btn btn-primary">Submit Reservation</button>
-        <button type="button" class="btn btn-danger">Cancel</button>
+            <div id="transaction_id_field" class="hidden">
+                <label for="trans_id">Transaction ID:</label>
+                <input type="text" id="trans_id" name="trans_id" class="form-control" value="{{ trans_id }}" readonly>
+            </div>
+
+            <label for="amount">Amount:</label>
+            <input type="number" id="amount" name="amount" class="form-control" placeholder="Enter Amount" required>
+
+            <label for="status">Reservation Status:</label>
+            <select id="status" name="status" class="form-control">
+                <option value="confirmed">Confirmed</option>
+            </select>
+
+            <button type="submit" class="btn btn-primary">Submit Reservation</button>
+        </form>
     </div>
     <div class="footer">
         <p>&copy; 2023 Desi Rasoi. All rights reserved.</p>
-        <p>Contact: +92333-1234567</p>
-        <p>WhatsApp: +92332-0987654</p> 
+        <p>Contact: +92333-1234567 | WhatsApp: +92332-0987654</p>
         <p>Email: dasirasoireturant@gmail.com</p>
         <p>Address: 123 Food Street, Rawalpindi, Pakistan</p>
         <p>Website: www.dasirasoi.com</p>
