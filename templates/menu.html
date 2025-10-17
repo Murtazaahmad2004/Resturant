@@ -5,91 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='script/script.js') }}"></script>
     <title>Resturant Menu</title>
-    <style>
-        body {
-            background-color: #f8f9fa;
-        }
-
-        .chefs-table {
-            margin: 20px;
-            padding: 20px;
-            border-radius: 10px;
-            background-color: #ffffff;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        h2 {
-            margin-bottom: 20px;
-        }
-
-        table {
-            width: 100%;
-            margin-top: 50px;
-        }
-
-        th, td {
-            text-align: center;
-        }
-
-        th {
-            background-color: #007bff;
-            color: white;
-        }
-
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-
-        tr:hover {
-            background-color: #d1ecf1;
-        }
-
-        .table-responsive {
-            overflow-x: auto;
-        }
-
-        .navbar {
-            background-color: #333;
-            color: white;
-            padding: 10px;
-            text-align: center;
-            font-size: 10px;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1000;
-        }
-
-        .navbar h2 {
-            margin: 0;
-            font-size: 2em;
-        }
-
-        .footer {
-            background-color: #333;
-            color: white;
-            text-align: center;
-            padding: 10px;
-            margin-top: 50px;
-            position: static;
-        }
-
-        .footer p {
-            margin: 0;
-        }
-
-        @media (max-width: 768px) {
-            .chefs-table {
-                margin: 10px;
-                padding: 10px;
-            }
-            h2 {
-                font-size: 1.5em;
-            }
-        }
-    </style>
 </head>
 <body>
     <div class="navbar">
