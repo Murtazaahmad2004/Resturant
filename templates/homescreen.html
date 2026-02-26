@@ -1,214 +1,313 @@
 <!DOCTYPE html>
 <html lang="en">
-   <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-      <link rel="stylesheet" href="{{ url_for('static', filename='styling/css/style.css') }}">
-      <script src="{{ url_for('static', filename='styling/script/script.js') }}"></script>
-      <title>Home Screen</title>
-   </head>
-   <body>
-      <div class="navbar">
-         <div class="logo">
-              <img alt="Logo" src="{{ url_for('static', filename='images/desi_logo.jpeg') }}">
-         </div>
-         <h1>Desi Rasoi Restaurant</h1>
-      </div>
-      <div class="navbar-2">
-          <ul class="nav-links">
-            <li><a href="menu.html"><i class="fas fa-utensils"></i> Menu</a></li>
-            <li><a href="reservation.html"><i class="fas fa-calendar-check"></i> Reservations</a></li>
-            <li><a href="contact.html"><i class="fas fa-phone-alt"></i> Contact</a></li>
-            <li><a href="reviews.html"><i class="fas fa-star"></i> Reviews and Rating</a></li>
-         </ul>
-      </div>
-      <div class="container">
-         <p>
-            🌶️ Welcome to Desi Rasoi! 🌿<br>
-            Where every bite takes you home. Step into a world of rich flavors,<br>
-            age-old recipes, and the warmth of traditional cooking. At Desi Rasoi,<br>
-            we believe in the magic of home-cooked meals. From the first sizzle of spices to the last bite of dessert,<br>
-            we serve authentic desi dishes made with love, spices, and soul — just like maa ke haath ka khaana.<br>
-            Our chefs are passionate about bringing you the best of Indian cuisine, using only the freshest ingredients and time-honored techniques.<br>
-            Whether you're craving buttery naan, sizzling tandoori, or the perfect biryani, your taste buds are in for a treat.<br>
-            Come hungry. Leave happy.
-         </p>
-      </div>
-      <div class="row-flex">
-         <div class="featured-container">
-            <h3>
-               🍽️ Featured Dishes<br>
-               Chef’s Specials You Can’t Miss!<br>
-               Discover our hand-picked signature<br>
-               dishes crafted with passion and the<br>
-               finest ingredients. Whether you’re<br>
-               craving something spicy, savory, or,<br>
-               sweet, our featured menu items are sure<br>
-               to satisfy your taste buds. Grilled Lemon<br>
-               Herb Chicken – Juicy, marinated chicken<br>
-               served with seasonal veggies. Spicy Shrimp<br>
-               – A fiery twist with fresh toppings and creamy<br>
-               sauce. Classic Tiramisu – A traditional Italian<br>
-               dessert to end your meal perfectly.<br>
-            </h3>
-         </div>
-         <div class="bg-image">
-             <img alt="Delicious food" src="{{ url_for('static', filename='images/pic.jpeg') }}">
-         </div>
-         <div class="featured-container">
-            <h3>
-               🍲 Signature Flavors<br>
-               Handpicked Favorites Just for You!<br>
-               Enjoy our curated selection of desi delights<br>
-               that bring home closer with every bite.<br>
-               Paneer Tikka – Spiced and grilled to perfection.<br>
-               Butter Chicken – Creamy, rich, and utterly satisfying.<br>
-               Gulab Jamun – Soft, syrupy, and irresistible.<br>
-               Explore flavors that speak the language of love and tradition.<br>
-            </h3>
-         </div>
-      </div>
-      <div class="container">
-        <h1><i class="fas fa-camera-retro"></i> Our Gallery</h1>
-        <div class="gallery-grid">
-            <img src="{{ url_for('static', filename='images/1.jpeg') }}">
-            <img src="{{ url_for('static', filename='images/2.jpeg') }}">
-            <img src="{{ url_for('static', filename='images/3.jpeg') }}">
-            <img src="{{ url_for('static', filename='images/4.jpeg') }}">
-            <img src="{{ url_for('static', filename='images/5.jpeg') }}">
-            <img src="{{ url_for('static', filename='images/6.jpeg') }}">
-            <img src="{{ url_for('static', filename='images/7.jpeg') }}">
-            <img src="{{ url_for('static', filename='images/8.jpeg') }}">
-            <img src="{{ url_for('static', filename='images/9.jpeg') }}">
-            <img src="{{ url_for('static', filename='images/10.jpeg') }}">
-            <img src="{{ url_for('static', filename='images/11.jpeg') }}">
-            <img src="{{ url_for('static', filename='images/12.jpeg') }}">
-            <img src="{{ url_for('static', filename='images/13.jpeg') }}">
-            <img src="{{ url_for('static', filename='images/14.jpeg') }}">
-        </div>
-    </div>
-     <div class="chefs-table">
-      <h2 class="text-center">
-         <i class="fas fa-utensils"></i>
-         Our Talented Pakistani Chefs
-      </h2>
-  <div class="table-responsive">
-    <table class="table table-bordered table-striped table-hover">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Chef Name</th>
-          <th>Specialty</th>
-          <th>Experience</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>Chef Ayesha Siddiqui</td>
-          <td>Karachi Biryani & Nihari</td>
-          <td>12 years in traditional Sindhi and Hyderabadi cuisine</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Chef Bilal Chaudhry</td>
-          <td>Punjabi BBQ & Tandoori</td>
-          <td>10 years managing grills in Lahore’s food street</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>Chef Nida Javed</td>
-          <td>Traditional Pakistani Desserts</td>
-          <td>8 years as a pastry chef in Islamabad</td>
-        </tr>
-        <tr>
-          <td>4</td>
-          <td>Chef Imtiaz Qureshi</td>
-          <td>Mughlai Kebabs & Rich Gravies</td>
-          <td>15 years in five-star hotels in Karachi</td>
-        </tr>
-        <tr>
-          <td>5</td>
-          <td>Chef Sana Khan</td>
-          <td>Peshawari Chapli Kebab & Dum Pulao</td>
-          <td>11 years in regional cuisine from KPK</td>
-        </tr>
-        <tr>
-          <td>6</td>
-          <td>Chef Tariq Baig</td>
-          <td>Balti Karahi & Mountain Stews</td>
-          <td>9 years cooking in Gilgit’s traditional inns</td>
-        </tr>
-        <tr>
-          <td>7</td>
-          <td>Chef Farah Malik</td>
-          <td>Fusion Desi-Chinese & Street Snacks</td>
-          <td>7 years running a home-based catering business</td>
-        </tr>
-        <tr>
-          <td>8</td>
-          <td>Chef Usman Raza</td>
-          <td>Tikka, Malai Boti & Paratha Rolls</td>
-          <td>13 years in Karachi’s Burns Road restaurants</td>
-        </tr>
-        <tr>
-          <td>9</td>
-          <td>Chef Hina Zaheer</td>
-          <td>Vegetarian Pakistani Dishes</td>
-          <td>10 years promoting plant-based desi meals</td>
-        </tr>
-        <tr>
-          <td>10</td>
-          <td>Chef Kamran Yousaf</td>
-          <td>Lamb Dishes & Biryani Variations</td>
-          <td>14 years including international cooking workshops</td>
-        </tr>
-        <tr>
-          <td>11</td>
-          <td>Chef Rubina Shah</td>
-          <td>Home-style Pakistani Meals</td>
-          <td>8 years as a food blogger and home chef</td>
-        </tr>
-        <tr>
-          <td>12</td>
-          <td>Chef Danish Mehmood</td>
-          <td>Seafood (Masala Fish, Prawn Karahi)</td>
-          <td>10 years in coastal city restaurants</td>
-        </tr>
-        <tr>
-          <td>13</td>
-          <td>Chef Zoya Irfan</td>
-          <td>Paratha Platters & Desi Breakfast</td>
-          <td>6 years with local dhaba-style breakfast catering</td>
-        </tr>
-        <tr>
-          <td>14</td>
-          <td>Chef Salman Hashmi</td>
-          <td>BBQ Skewers & Live Grill Stations</td>
-          <td>9 years in event catering and live BBQ stalls</td>
-        </tr>
-        <tr>
-          <td>15</td>
-          <td>Chef Mehak Ali</td>
-          <td>Shahi Tukray, Ras Malai & Mithai</td>
-          <td>10 years running a boutique dessert kitchen</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Desi Rasoi | Fine Dining Experience</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="{{ url_for('static', filename='script/script.js') }}"></script>
+<style>
+
+/* Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+html {
+  scroll-behavior: smooth;
+}
+
+body{
+margin:0;
+font-family:'Poppins',sans-serif;
+background:#0f0f0f;
+color:#fff;
+scroll-behavior:smooth;
+}
+
+/* Navbar */
+.navbar-custom{
+background:rgba(0,0,0,0.85);
+backdrop-filter:blur(10px);
+padding:15px 40px;
+position:fixed;
+width:100%;
+z-index:1000;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.logo{
+display:flex;
+align-items:center;
+gap:10px;
+}
+
+.logo img{
+width:55px;
+height:55px;
+border-radius:50%;
+border:2px solid #c59d5f;
+}
+
+.logo span{
+font-size:22px;
+font-weight:600;
+letter-spacing:1px;
+}
+
+.nav-links a{
+color:white;
+margin-left:25px;
+font-weight:500;
+text-decoration:none;
+transition:0.3s;
+}
+
+.nav-links a:hover{
+color:#c59d5f;
+}
+
+/* Hero */
+.hero{
+height:100vh;
+background:linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)),
+url("{{ url_for('static', filename='images/pic.jpeg') }}");
+background-size:cover;
+background-position:center;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:20px;
+}
+
+.hero h1{
+font-size:55px;
+font-weight:700;
+}
+
+.hero p{
+font-size:20px;
+max-width:700px;
+margin:20px auto;
+color:#ddd;
+}
+
+.btn-gold{
+background:#c59d5f;
+color:#000;
+padding:12px 35px;
+border-radius:40px;
+border:none;
+font-weight:600;
+transition:0.3s;
+}
+
+.btn-gold a {
+text-decoration: none;
+color: #000;
+}
+
+.btn-gold:hover{
+background:#a67c3d;
+color:#fff;
+}
+
+/* Section Title */
+.section-title{
+text-align:center;
+margin:100px 0 50px;
+font-size:36px;
+font-weight:700;
+color:#c59d5f;
+}
+
+/* Feature Cards */
+.card-custom{
+background:#1a1a1a;
+border-radius:15px;
+padding:30px;
+text-align:center;
+transition:0.4s;
+box-shadow:0 5px 25px rgba(0,0,0,0.5);
+margin-bottom:30px;
+}
+
+.card-custom:hover{
+transform:translateY(-10px);
+box-shadow:0 10px 40px rgba(197,157,95,0.3);
+}
+
+.card-custom i{
+font-size:40px;
+color:#c59d5f;
+margin-bottom:15px;
+}
+
+/* Gallery */
+.gallery-box{
+overflow:hidden;
+border-radius:15px;
+box-shadow:0 5px 20px rgba(0,0,0,0.6);
+margin-bottom:25px;
+}
+
+.gallery-box img{
+width:100%;
+border-radius:15px;
+transition:0.5s;
+}
+
+.gallery-box:hover img{
+transform:scale(1.1);
+}
+
+/* Chef Cards */
+.chef-card{
+background:#1a1a1a;
+padding:25px;
+border-radius:15px;
+text-align:center;
+margin-bottom:30px;
+transition:0.4s;
+box-shadow:0 5px 25px rgba(0,0,0,0.5);
+}
+
+.chef-card:hover{
+transform:translateY(-10px);
+box-shadow:0 10px 35px rgba(197,157,95,0.4);
+}
+
+.chef-img{
+width:120px;
+height:120px;
+border-radius:50%;
+margin-bottom:15px;
+border:3px solid #c59d5f;
+object-fit:cover;
+}
+
+/* Footer */
+.footer{
+background:#000;
+padding:40px 0;
+text-align:center;
+margin-top:80px;
+}
+
+.footer a{
+color:#c59d5f;
+text-decoration:none;
+}
+
+.footer a:hover{
+text-decoration:underline;
+}
+
+@media(max-width:768px){
+.hero h1{font-size:32px;}
+.hero p{font-size:16px;}
+.nav-links{display:none;}
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar-custom">
+<div class="logo">
+<a href="#homescreen">
+<img src="{{ url_for('static', filename='images/desi_logo.jpeg') }}">
+</a>
+<span>Desi Rasoi</span>
 </div>
-      <div class="footer">
-        <p>&copy; 2023 Desi Rasoi. All rights reserved.</p>
-        <p>Contact: +92333-1234567 | WhatsApp: +92332-0987654</p>
-        <p>Email: dasirasoireturant@gmail.com</p>
-        <p>Address: 123 Food Street, Rawalpindi, Pakistan</p>
-        <p>Website: www.dasirasoi.com</p>
-        <p>Follow us on social media: 
-            <a href="https://www.facebook.com/dasirasoi">Facebook</a> | 
-            <a href="https://www.instagram.com/dasirasoi">Instagram</a> 
-         </p>
-      </div>
-   </body>
+
+<div class="nav-links">
+<a href="{{ url_for('menu') }}">Menu</a>
+<a href="{{ url_for('reservation') }}">Reservation</a>
+<a href="{{ url_for('contact') }}">Contact</a>
+<a href="{{ url_for('reviews') }}">Reviews</a>
+</div>
+</div>
+
+<!-- HERO -->
+<div class="hero" id="homescreen">
+<div>
+<h1>Luxury Fine Dining Experience</h1>
+<p>Authentic Pakistani flavors crafted with passion, served in an elegant ambiance that feels like home.</p>
+<button class="btn-gold">
+  <a href="{{ url_for('reservation') }}">Reserve Your Table</a>
+</button>
+</div>
+</div>
+
+<!-- FEATURES -->
+<div class="container">
+<h2 class="section-title">Our Signature Experience</h2>
+
+<div class="row">
+<div class="col-md-4">
+<div class="card-custom">
+<i class="fas fa-drumstick-bite"></i>
+<h4>Premium Quality Ingredients</h4>
+<p>We use fresh, locally sourced ingredients for unmatched taste.</p>
+</div>
+</div>
+
+<div class="col-md-4">
+<div class="card-custom">
+<i class="fas fa-fire"></i>
+<h4>Authentic Traditional Recipes</h4>
+<p>Time-honored cooking methods with modern presentation.</p>
+</div>
+</div>
+
+<div class="col-md-4">
+<div class="card-custom">
+<i class="fas fa-glass-cheers"></i>
+<h4>Elegant Dining Atmosphere</h4>
+<p>Experience luxury, comfort and hospitality in every visit.</p>
+</div>
+</div>
+</div>
+</div>
+
+
+
+<!-- CHEFS -->
+<div class="container">
+<h2 class="section-title">Meet Our Master Chefs</h2>
+<div class="row">
+
+{% for i in range(1,21) %}
+<div class="col-lg-3 col-md-4 col-sm-6">
+<div class="chef-card">
+<img src="{{ url_for('static', filename='images/chef.jpeg') }}" class="chef-img">
+<h4>Chef {{ i }}</h4>
+<p><strong>Specialty:</strong> Premium Cuisine</p>
+<p><strong>Experience:</strong> {{ 5+i }} Years</p>
+</div>
+</div>
+{% endfor %}
+
+</div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+<p>&copy; 2026 <strong>Desi Rasoi</strong>. All Rights Reserved.</p>
+<p>📞 +92333-1234567 | WhatsApp: +92332-0987654</p>
+<p>📧 dasirasoireturant@gmail.com</p>
+<p>📍 123 Food Street, Rawalpindi, Pakistan</p>
+<p>
+Follow Us:
+<a href="#">Facebook</a> |
+<a href="#">Instagram</a>
+</p>
+</div>
+
+</body>
 </html>

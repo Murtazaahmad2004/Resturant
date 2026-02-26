@@ -119,105 +119,107 @@ def orders():
     return render_template('order.html', orderid=orderid, customerid=customerid, trans_id=trans_id)
 
 # Reservation page
-# def generate_random_res_id(length=4):
-#     return 'RESER-' + ''.join(random.choices(string.digits, k=length))
+@app.route('/reservation', methods=['GET', 'POST'])
+def reservation():
+    if request.method == 'POST':
 
-# def generate_random_trans_id(length=4):
-#     return 'TRANS-' + ''.join(random.choices(string.digits, k=length))
+        res_id = request.form.get('res_id')
+        name = request.form.get('name')
+        email = request.form.get('email')
+        phone = request.form.get('phone')
+        reservation_date = request.form.get('reservation_date')
+        reservation_time = request.form.get('reservation_time')
+        guests = request.form.get('guests')
+        special_requests = ', '.join(request.form.getlist('special_requests'))
+        other_request = request.form.get('other_request')
+        payment = request.form.get('payment')
+        trans_id = request.form.get('trans_id')
+        amount = request.form.get('amount')
+        status = request.form.get('status')
 
-# @app.route('/reservation.html')
-# def reservation_page():
-#     res_id = generate_random_res_id()
-#     trans_id = generate_random_trans_id()
-#     return render_template('reservation.html', res_id=res_id, trans_id=trans_id)
+        if payment == 'Cash':
+            trans_id = 'Nill'
 
-# @app.route('/reservation', methods=['GET', 'POST'])
-# def reservation():
-#     if request.method == 'POST':
-#         res_id = request.form.get('res_id')
-#         name = request.form.get('name')
-#         email = request.form.get('email')
-#         phone = request.form.get('phone')
-#         reservation_date = request.form.get('reservation_date')
-#         reservation_time = request.form.get('reservation_time')
-#         guests = request.form.get('guests')
-#         special_requests = ', '.join(request.form.getlist('special_requests'))  # handle multiple checkboxes
-#         other_request = request.form.get('other_request')
-#         payment = request.form.get('payment')
-#         trans_id = request.form.get('trans_id')
-#         amount = request.form.get('amount')
-#         status = request.form.get('status')
+        try:
+            conn = mysql.connector.connect(**db_config)
+            cursor = conn.cursor()
 
-#         if payment == 'cash':
-#             trans_id = 'Nill'
-#         else:
-#             trans_id = request.form.get('trans_id')
+            cursor.execute("""
+                INSERT INTO reservations (
+                    Reservation_ID, Name, Email, Phone_No, Reservation_Date,
+                    Reservation_Time, Number_of_Guests, Special_Request,
+                    Other_Request, Payment_Method, Transaction_ID,
+                    Amount, Reservation_Status
+                ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            """, (
+                res_id, name, email, phone, reservation_date,
+                reservation_time, guests, special_requests,
+                other_request, payment, trans_id,
+                amount, status
+            ))
 
-#         # Check for empty fields
-#         if not all([res_id, name, email, phone, reservation_date, reservation_time, guests,
-#                     payment, amount, status]):
-#             error = "⚠️ All fields are required"
-#             return render_template('reservation.html', error=error, res_id=res_id, trans_id=trans_id)
+            conn.commit()
+            success = "✅ Reservation Successfully Submitted!"
 
-#         cursor = db.cursor()
-#         try:
-#             cursor.execute("""
-#                 INSERT INTO reservations (
-#                     Reservation_ID, Name, Email, Phone_No, Reservation_Date, Reservation_Time,
-#                     Number_of_Guests, Special_Request, Other_Request, Payment_Method,
-#                     Transaction_ID, Amount, Reservation_Status
-#                 ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-#             """, (
-#                 res_id, name, email, phone, reservation_date, reservation_time, guests,
-#                 special_requests, other_request, payment, trans_id, amount, status
-#             ))
-#             db.commit()
-#             success = "✅ Reservation submitted successfully!"
-#             return render_template('reservation.html', success=success,
-#                                    res_id=generate_random_res_id(), trans_id=generate_random_trans_id())
-#         except Exception as e:
-#             print("Error inserting into database:", e)
-#             error = f"Failed to insert reservation: {str(e)}"
-#             return render_template('reservation.html', error=error, res_id=res_id, trans_id=trans_id)
-#         finally:
-#             cursor.close()
+        except Exception as e:
+            error = f"❌ Failed to insert reservation: {e}"
 
-#     res_id = generate_random_res_id()
-#     trans_id = generate_random_trans_id()
-#     return render_template('reservation.html', res_id=res_id, trans_id=trans_id)
+        finally:
+            if cursor:
+                cursor.close()
+            if conn:
+                conn.close()
 
-# # Review page
-# @app.route('/reviews', methods=['GET', 'POST'])
-# def reviews():
-#     if request.method == 'POST':
-#         c_name = request.form.get('c_name')
-#         remarks = request.form.get('remarks')
+        return render_template(
+            'reservation.html',
+            success=success if 'success' in locals() else None,
+            error=error if 'error' in locals() else None,
+            res_id=res_id,
+            trans_id=trans_id
+        )
 
-#         # Check for empty fields
-#         if not all([c_name, remarks]):
-#             error = "⚠️ All fields are required"
-#             return render_template('reviews.html', error=error)
+    # GET request
+    res_id = generate_random_trans_id()
+    trans_id = generate_random_trans_id()
+    return render_template('reservation.html', res_id=res_id, trans_id=trans_id)
 
-#         cursor = db.cursor()
-#         try:
-#             cursor.execute("""
-#                 INSERT INTO reviews (
-#                     Customer_Name, Feedback
-#                 ) VALUES (%s, %s)
-#             """, (
-#                 c_name, remarks
-#             ))
-#             db.commit()
-#             success = "✅ Review submitted successfully!"
-#             return render_template('reviews.html', success=success)
-#         except Exception as e:
-#             print("Error inserting into database:", e)
-#             error = f"Failed to insert review: {str(e)}"
-#             return render_template('reviews.html', error=error)
-#         finally:
-#             cursor.close()
+# Review page
+@app.route('/reviews', methods=['GET', 'POST'])
+def reviews():
+    if request.method == 'POST':
 
-#     return render_template('reviews.html')
+        c_name = request.form.get('c_name')
+        remarks = request.form.get('remarks')
+
+        try:
+            conn = mysql.connector.connect(**db_config)
+            cursor = conn.cursor()
+
+            cursor.execute("""
+                INSERT INTO reviews (
+                    Customer_Name, Feedback
+                ) VALUES (%s, %s)
+            """, (c_name, remarks))
+
+            conn.commit()
+            success = "✅ Review Submitted Successfully!"
+
+        except Exception as e:
+            error = f"❌ Failed to insert review: {e}"
+
+        finally:
+            if cursor:
+                cursor.close()
+            if conn:
+                conn.close()
+
+        return render_template(
+            'reviews.html',
+            success=success if 'success' in locals() else None,
+            error=error if 'error' in locals() else None
+        )
+
+    return render_template('reviews.html')
 
 if __name__ == '__main__':
-    app.run(host="192.168.100.3", port=5000, debug=True)
+    app.run(debug=True)
