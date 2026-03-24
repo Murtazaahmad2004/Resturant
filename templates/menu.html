@@ -3,94 +3,122 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Desi Rasoi | Menu</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<script src="{{ url_for('static', filename='script/script.js') }}"></script>
-<title>Desi Rasoi | Menu</title>
 
 <style>
 /* ===== GENERAL ===== */
 body {
-    font-family: 'Segoe UI', sans-serif;
-    background: #fff8f0; /* Home page jaisa light warm background */
+    font-family: 'Poppins', sans-serif;
+    background: #fef6ee;
+    background:#0f0f0f;
     margin: 0;
     padding: 0;
 }
 
-/* ===== NAVBAR HEADER ===== */
-.navbar {
-    background-color: #8B0000; /* Home page main color */
-    color: #fff;
-    padding: 15px 0;
-    text-align: center;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+.navbar-custom {
+    background-color: #8B0000;
+    padding: 15px 40px;
+    width: 100%;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between; /* menu-title left, links right */
+    align-items: center;
+    flex-wrap: wrap;
 }
 
-.navbar h2 {
-    margin: 0;
-    font-weight: 700;
-    font-size: 28px;
-    letter-spacing: 1px;
+.navbar-custom .menu-title {
+    color: white;
+    font-size: 24px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px; /* space between icon and text */
 }
 
-.navbar i {
-    margin-right: 10px;
+.nav-links {
+    display: flex;
+    gap: 25px;
 }
 
-/* ===== TABLE STYLE ===== */
+.nav-links a {
+    color: white;
+    font-weight: 500;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.nav-links a:hover {
+    color: #ffffff;
+}
+
+/* ===== MENU TABLE ===== */
 .chefs-table {
-    padding: 30px 20px;
+    padding: 40px 20px;
+}
+
+.table-responsive {
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    overflow: hidden;
 }
 
 .table {
     background: #fff;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    border: none;
 }
 
 .table thead {
-    background-color: #8B0000; /* Home page primary color */
+    background-color: #8B0000;
     color: #fff;
+    font-weight: 600;
+    font-size: 16px;
 }
 
-.table th {
+.table th, .table td {
     text-align: center;
-}
-
-.table td {
     vertical-align: middle !important;
-    text-align: center;
+    padding: 12px 15px;
+}
+
+.table tbody tr {
+    transition: 0.3s;
 }
 
 .table tbody tr:hover {
-    background: #fff0f0; /* Light hover like home page */
-    transition: 0.3s;
+    background: #fff0f0;
+    transform: translateX(5px);
 }
 
 /* ===== BUTTONS ===== */
-.btn-order {
-    background-color: #28a745; /* Green like home page order buttons */
-    border: none;
-    color: #fff;
+.btn-order, .btn-cart {
+    font-size: 14px;
+    border-radius: 25px;
+    padding: 6px 15px;
     transition: 0.3s;
+}
+
+.btn-order {
+    background-color: #28a745;
+    color: #fff;
+    border: none;
 }
 
 .btn-order:hover {
     background-color: #218838;
-    color: #ffffff;
+    color: #fff;
 }
 
 .btn-cart {
-    background-color: #ff9800; /* Orange like home page add to cart */
-    border: none;
+    background-color: #ff9800;
     color: #fff;
-    transition: 0.3s;
+    border: none;
 }
 
 .btn-cart:hover {
     background-color: #e68900;
-    color: #ffffff;
+    color: #fff;
 }
 
 /* ===== FOOTER ===== */
@@ -103,35 +131,58 @@ body {
 }
 
 .footer a {
-    color:#c59d5f;
+    color: #c59d5f;
+    margin: 0 5px;
     text-decoration: none;
+    font-size: 18px;
 }
 
 .footer a:hover {
-    text-decoration: underline;
+    color: #fff;
+}
+
+/* WhatsApp Icon */
+.footer .whatsapp-icon {
+    color: #25D366;
+    font-size: 20px;
+    transition: transform 0.3s, color 0.3s;
+}
+
+.footer .whatsapp-icon:hover {
+    transform: scale(1.2);
+    color: #128C7E;
 }
 
 /* ===== RESPONSIVE ===== */
 @media(max-width:768px){
-    .table {
+    .table th, .table td {
         font-size: 13px;
+        padding: 8px 10px;
     }
 }
 </style>
-
 </head>
+
 <body>
 
-<!-- NAVBAR HEADER -->
-<div class="navbar">
-    <h2><i class="fas fa-utensils"></i> Menu List</h2>
+<!-- NAVBAR -->
+<div class="navbar-custom">
+    <div class="menu-title">
+        <i class="fas fa-utensils"></i> Menu List
+    </div>
+
+    <div class="nav-links">
+        <a href="{{ url_for('menu') }}">Menu</a>
+        <a href="{{ url_for('reservation') }}">Reservation</a>
+        <a href="{{ url_for('contact') }}">Contact</a>
+        <a href="{{ url_for('reviews') }}">Reviews</a>
+    </div>
 </div>
 
 <!-- MENU TABLE -->
 <div class="chefs-table container">
 <div class="table-responsive">
-<table class="table table-bordered table-hover">
-
+<table class="table table-hover">
 <thead>
 <tr>
 <th>#</th>
@@ -142,28 +193,60 @@ body {
 <th>Cart</th>
 </tr>
 </thead>
-
 <tbody>
-<tr>
-<td>1</td>
-<td><strong>Chicken Biryani</strong></td>
-<td>1/2 KG</td>
-<td>Rs. 560</td>
-<td><button class="btn btn-order btn-sm" onclick="window.location.href='order.html'"><i class="fas fa-shopping-bag"></i> Order</button></td>
-<td><button class="btn btn-cart btn-sm" onclick="window.location.href='cart.html'"><i class="fas fa-cart-plus"></i> Add</button></td>
-</tr>
 
-<tr>
-<td>2</td>
-<td><strong>Beef Biryani</strong></td>
-<td>1/2 KG</td>
-<td>Rs. 460</td>
-<td><button class="btn btn-order btn-sm" onclick="window.location.href='order.html'"><i class="fas fa-shopping-bag"></i> Order</button></td>
-<td><button class="btn btn-cart btn-sm" onclick="window.location.href='cart.html'"><i class="fas fa-cart-plus"></i> Add</button></td>
-</tr>
+<tr><td>1</td><td><strong>Chicken Biryani</strong></td><td>1 KG</td><td>Rs. 2,500</td><td><button class="btn btn-order btn-sm"  onclick="window.location.href='order.html'"><i class="fas fa-shopping-bag"></i> Order</button></td><td><button class="btn btn-cart btn-sm" onclick="window.location.href='cart.html'" ><i class="fas fa-cart-plus"></i> Add</button></td></tr>
+<tr><td>2</td><td><strong>Beef Biryani</strong></td><td>1 KG</td><td>Rs. 2,800</td><td><button class="btn btn-order btn-sm"  onclick="window.location.href='order.html'"><i class="fas fa-shopping-bag"></i> Order</button></td><td><button class="btn btn-cart btn-sm" onclick="window.location.href='cart.html'" ><i class="fas fa-cart-plus"></i> Add</button></td></tr>
+<tr><td>3</td><td><strong>Mutton Korma</strong></td><td>1 KG</td><td>Rs. 3,200</td><td><button class="btn btn-order btn-sm"  onclick="window.location.href='order.html'"><i class="fas fa-shopping-bag"></i> Order</button></td><td><button class="btn btn-cart btn-sm" onclick="window.location.href='cart.html'" ><i class="fas fa-cart-plus"></i> Add</button></td></tr>
+<tr><td>4</td><td><strong>Butter Chicken</strong></td><td>1 KG</td><td>Rs. 2,900</td><td><button class="btn btn-order btn-sm"  onclick="window.location.href='order.html'"><i class="fas fa-shopping-bag"></i> Order</button></td><td><button class="btn btn-cart btn-sm" onclick="window.location.href='cart.html'" ><i class="fas fa-cart-plus"></i> Add</button></td></tr>
+<tr><td>5</td><td><strong>Chicken Handi</strong></td><td>1 KG</td><td>Rs. 3,500</td><td><button class="btn btn-order btn-sm"  onclick="window.location.href='order.html'"><i class="fas fa-shopping-bag"></i> Order</button></td><td><button class="btn btn-cart btn-sm" onclick="window.location.href='cart.html'" ><i class="fas fa-cart-plus"></i> Add</button></td></tr>
+<tr><td>6</td><td><strong>Beef Nihari</strong></td><td>1 KG</td><td>Rs. 4,000</td><td><button class="btn btn-order btn-sm"  onclick="window.location.href='order.html'"><i class="fas fa-shopping-bag"></i> Order</button></td><td><button class="btn btn-cart btn-sm" onclick="window.location.href='cart.html'" ><i class="fas fa-cart-plus"></i> Add</button></td></tr>
+<tr><td>7</td><td><strong>Mutton Pulao</strong></td><td>1 KG</td><td>Rs. 3,800</td><td><button class="btn btn-order btn-sm"  onclick="window.location.href='order.html'"><i class="fas fa-shopping-bag"></i> Order</button></td><td><button class="btn btn-cart btn-sm" onclick="window.location.href='cart.html'" ><i class="fas fa-cart-plus"></i> Add</button></td></tr>
+<tr><td>8</td><td><strong>Chicken Karahi</strong></td><td>1 KG</td><td>Rs. 3,000</td><td><button class="btn btn-order btn-sm"  onclick="window.location.href='order.html'"><i class="fas fa-shopping-bag"></i> Order</button></td><td><button class="btn btn-cart btn-sm" onclick="window.location.href='cart.html'" ><i class="fas fa-cart-plus"></i> Add</button></td></tr>
+<tr><td>9</td><td><strong>Beef Qorma</strong></td><td>1 KG</td><td>Rs. 4,200</td><td><button class="btn btn-order btn-sm"  onclick="window.location.href='order.html'"><i class="fas fa-shopping-bag"></i> Order</button></td><td><button class="btn btn-cart btn-sm" onclick="window.location.href='cart.html'" ><i class="fas fa-cart-plus"></i> Add</button></td></tr>
+<tr><td>10</td><td><strong>Mutton Handi</strong></td><td>1 KG</td><td>Rs. 4,500</td><td><button class="btn btn-order btn-sm"  onclick="window.location.href='order.html'"><i class="fas fa-shopping-bag"></i> Order</button></td><td><button class="btn btn-cart btn-sm" onclick="window.location.href='cart.html'" ><i class="fas fa-cart-plus"></i> Add</button></td></tr>
+<tr><td>11</td><td><strong>Chicken Malai Boti</strong></td><td>1 KG</td><td>Rs. 2,700</td><td><button class="btn btn-order btn-sm"  onclick="window.location.href='order.html'"><i class="fas fa-shopping-bag"></i> Order</button></td><td><button class="btn btn-cart btn-sm" onclick="window.location.href='cart.html'" ><i class="fas fa-cart-plus"></i> Add</button></td></tr>
+<tr><td>12</td><td><strong>Beef Seekh Kebabs</strong></td><td>1 KG</td><td>Rs. 3,600</td><td><button class="btn btn-order btn-sm"  onclick="window.location.href='order.html'"><i class="fas fa-shopping-bag"></i> Order</button></td><td><button class="btn btn-cart btn-sm" onclick="window.location.href='cart.html'" ><i class="fas fa-cart-plus"></i> Add</button></td></tr>
+<tr><td>13</td><td><strong>Mutton Chapli Kebabs</strong></td><td>1 KG</td><td>Rs. 4,100</td><td><button class="btn btn-order btn-sm"  onclick="window.location.href='order.html'"><i class="fas fa-shopping-bag"></i> Order</button></td><td><button class="btn btn-cart btn-sm" onclick="window.location.href='cart.html'" ><i class="fas fa-cart-plus"></i> Add</button></td></tr>
+<tr><td>14</td><td><strong>Chicken Tikka</strong></td><td>1 KG</td><td>Rs. 3,200</td><td><button class="btn btn-order btn-sm"  onclick="window.location.href='order.html'"><i class="fas fa-shopping-bag"></i> Order</button></td><td><button class="btn btn-cart btn-sm" onclick="window.location.href='cart.html'" ><i class="fas fa-cart-plus"></i> Add</button></td></tr>
+<tr><td>15</td><td><strong>Beef Tikka</strong></td><td>1 KG</td><td>Rs. 4,300</td><td><button class="btn btn-order btn-sm"  onclick="window.location.href='order.html'"><i class="fas fa-shopping-bag"></i> Order</button></td><td><button class="btn btn-cart btn-sm" onclick="window.location.href='cart.html'" ><i class="fas fa-cart-plus"></i> Add</button></td></tr>
+<tr><td>16</td><td><strong>Mutton Tikka</strong></td><td>1 KG</td><td>Rs. 4,700</td><td><button class="btn btn-order btn-sm"  onclick="window.location.href='order.html'"><i class="fas fa-shopping-bag"></i> Order</button></td><td><button class="btn btn-cart btn-sm" onclick="window.location.href='cart.html'" ><i class="fas fa-cart-plus"></i> Add</button></td></tr>
+<tr><td>17</td><td><strong>Chicken Reshmi Kabab</strong></td><td>1 KG</td><td>Rs. 3,000</td><td><button class="btn btn-order btn-sm"  onclick="window.location.href='order.html'"><i class="fas fa-shopping-bag"></i> Order</button></td><td><button class="btn btn-cart btn-sm" onclick="window.location.href='cart.html'" ><i class="fas fa-cart-plus"></i> Add</button></td></tr>
+<tr><td>18</td><td><strong>Beef Boti Kabab</strong></td><td>1 KG</td><td>Rs. 3,900</td><td><button class="btn btn-order btn-sm"  onclick="window.location.href='order.html'"><i class="fas fa-shopping-bag"></i> Order</button></td><td><button class="btn btn-cart btn-sm" onclick="window.location.href='cart.html'" ><i class="fas fa-cart-plus"></i> Add</button></td></tr>
+<tr><td>19</td><td><strong>Mutton Boti Kabab</strong></td><td>1 KG</td><td>Rs. 4,800</td><td><button class="btn btn-order btn-sm"  onclick="window.location.href='order.html'"><i class="fas fa-shopping-bag"></i> Order</button></td><td><button class="btn btn-cart btn-sm" onclick="window.location.href='cart.html'" ><i class="fas fa-cart-plus"></i> Add</button></td></tr>
+<tr><td>20</td><td><strong>Chicken Seekh Kabab</strong></td><td>1 KG</td><td>Rs. 2,800</td><td><button class="btn btn-order btn-sm"  onclick="window.location.href='order.html'"><i class="fas fa-shopping-bag"></i> Order</button></td><td><button class="btn btn-cart btn-sm" onclick="window.location.href='cart.html'" ><i class="fas fa-cart-plus"></i> Add</button></td></tr>
+<tr><td>21</td><td><strong>Beef Korma</strong></td><td>1 KG</td><td>Rs. 4,500</td><td><button class="btn btn-order btn-sm"  onclick="window.location.href='order.html'"><i class="fas fa-shopping-bag"></i> Order</button></td><td><button class="btn btn-cart btn-sm" onclick="window.location.href='cart.html'" ><i class="fas fa-cart-plus"></i> Add</button></td></tr>
+<tr><td>22</td><td><strong>Chicken Korma</strong></td><td>1 KG</td><td>Rs. 3,600</td><td><button class="btn btn-order btn-sm"  onclick="window.location.href='order.html'"><i class="fas fa-shopping-bag"></i> Order</button></td><td><button class="btn btn-cart btn-sm" onclick="window.location.href='cart.html'" ><i class="fas fa-cart-plus"></i> Add</button></td></tr>
+<tr><td>23</td><td><strong>Mutton Paya</strong></td><td>1 KG</td><td>Rs. 5,000</td><td><button class="btn btn-order btn-sm"  onclick="window.location.href='order.html'"><i class="fas fa-shopping-bag"></i> Order</button></td><td><button class="btn btn-cart btn-sm" onclick="window.location.href='cart.html'" ><i class="fas fa-cart-plus"></i> Add</button></td></tr>
+<tr><td>24</td><td><strong>Chicken Paya</strong></td><td>1 KG</td><td>Rs. 3,300</td><td><button class="btn btn-order btn-sm"  onclick="window.location.href='order.html'"><i class="fas fa-shopping-bag"></i> Order</button></td><td><button class="btn btn-cart btn-sm" onclick="window.location.href='cart.html'" ><i class="fas fa-cart-plus"></i> Add</button></td></tr>
+<tr><td>25</td><td><strong>Beef Paya</strong></td><td>1 KG</td><td>Rs. 4,900</td><td><button class="btn btn-order btn-sm"  onclick="window.location.href='order.html'"><i class="fas fa-shopping-bag"></i> Order</button></td><td><button class="btn btn-cart btn-sm" onclick="window.location.href='cart.html'" ><i class="fas fa-cart-plus"></i> Add</button></td></tr>
+<tr><td>26</td><td><strong>Chicken Chapli Kabab</strong></td><td>1 KG</td><td>Rs. 3,200</td><td><button class="btn btn-order btn-sm"  onclick="window.location.href='order.html'"><i class="fas fa-shopping-bag"></i> Order</button></td><td><button class="btn btn-cart btn-sm" onclick="window.location.href='cart.html'" ><i class="fas fa-cart-plus"></i> Add</button></td></tr>
+<tr><td>27</td><td><strong>Beef Chapli Kabab</strong></td><td>1 KG</td><td>Rs. 4,400</td><td><button class="btn btn-order btn-sm"  onclick="window.location.href='order.html'"><i class="fas fa-shopping-bag"></i> Order</button></td><td><button class="btn btn-cart btn-sm" onclick="window.location.href='cart.html'" ><i class="fas fa-cart-plus"></i> Add</button></td></tr>
+<tr><td>28</td><td><strong>Chicken Malai Tikka</strong></td><td>1 KG</td><td>Rs. 3,500</td><td><button class="btn btn-order btn-sm"  onclick="window.location.href='order.html'"><i class="fas fa-shopping-bag"></i> Order</button></td><td><button class="btn btn-cart btn-sm" onclick="window.location.href='cart.html'" ><i class="fas fa-cart-plus"></i> Add</button></td></tr>
+<tr><td>29</td><td><strong>Mutton Malai Tikka</strong></td><td>1 KG</td><td>Rs. 5,200</td><td><button class="btn btn-order btn-sm"  onclick="window.location.href='order.html'"><i class="fas fa-shopping-bag"></i> Order</button></td><td><button class="btn btn-cart btn-sm" onclick="window.location.href='cart.html'" ><i class="fas fa-cart-plus"></i> Add</button></td></tr>
+<tr><td>30</td><td><strong>Chicken Afghani</strong></td><td>1 KG</td><td>Rs. 3,800</td><td><button class="btn btn-order btn-sm"  onclick="window.location.href='order.html'"><i class="fas fa-shopping-bag"></i> Order</button></td><td><button class="btn btn-cart btn-sm" onclick="window.location.href='cart.html'" ><i class="fas fa-cart-plus"></i> Add</button></td></tr>
+<tr><td>31</td><td><strong>Beef Afghani</strong></td><td>1 KG</td><td>Rs. 5,000</td><td><button class="btn btn-order btn-sm"  onclick="window.location.href='order.html'"><i class="fas fa-shopping-bag"></i> Order</button></td><td><button class="btn btn-cart btn-sm" onclick="window.location.href='cart.html'" ><i class="fas fa-cart-plus"></i> Add</button></td></tr>
+<tr><td>32</td><td><strong>Mutton Afghani</strong></td><td>1 KG</td><td>Rs. 5,500</td><td><button class="btn btn-order btn-sm"  onclick="window.location.href='order.html'"><i class="fas fa-shopping-bag"></i> Order</button></td><td><button class="btn btn-cart btn-sm" onclick="window.location.href='cart.html'" ><i class="fas fa-cart-plus"></i> Add</button></td></tr>
+<tr><td>33</td><td><strong>Chicken BBQ</strong></td><td>1 KG</td><td>Rs. 3,700</td><td><button class="btn btn-order btn-sm"  onclick="window.location.href='order.html'"><i class="fas fa-shopping-bag"></i> Order</button></td><td><button class="btn btn-cart btn-sm" onclick="window.location.href='cart.html'" ><i class="fas fa-cart-plus"></i> Add</button></td></tr>
+<tr><td>34</td><td><strong>Beef BBQ</strong></td><td>1 KG</td><td>Rs. 5,200</td><td><button class="btn btn-order btn-sm"  onclick="window.location.href='order.html'"><i class="fas fa-shopping-bag"></i> Order</button></td><td><button class="btn btn-cart btn-sm" onclick="window.location.href='cart.html'" ><i class="fas fa-cart-plus"></i> Add</button></td></tr>
+<tr><td>35</td><td><strong>Mutton BBQ</strong></td><td>1 KG</td><td>Rs. 6,000</td><td><button class="btn btn-order btn-sm"  onclick="window.location.href='order.html'"><i class="fas fa-shopping-bag"></i> Order</button></td><td><button class="btn btn-cart btn-sm" onclick="window.location.href='cart.html'" ><i class="fas fa-cart-plus"></i> Add</button></td></tr>
+<tr><td>36</td><td><strong>Chicken Masala</strong></td><td>1 KG</td><td>Rs. 3,200</td><td><button class="btn btn-order btn-sm"  onclick="window.location.href='order.html'"><i class="fas fa-shopping-bag"></i> Order</button></td><td><button class="btn btn-cart btn-sm" onclick="window.location.href='cart.html'" ><i class="fas fa-cart-plus"></i> Add</button></td></tr>
+<tr><td>37</td><td><strong>Beef Masala</strong></td><td>1 KG</td><td>Rs. 4,800</td><td><button class="btn btn-order btn-sm"  onclick="window.location.href='order.html'"><i class="fas fa-shopping-bag"></i> Order</button></td><td><button class="btn btn-cart btn-sm" onclick="window.location.href='cart.html'" ><i class="fas fa-cart-plus"></i> Add</button></td></tr>
+<tr><td>38</td><td><strong>Mutton Masala</strong></td><td>1 KG</td><td>Rs. 5,500</td><td><button class="btn btn-order btn-sm"  onclick="window.location.href='order.html'"><i class="fas fa-shopping-bag"></i> Order</button></td><td><button class="btn btn-cart btn-sm" onclick="window.location.href='cart.html'" ><i class="fas fa-cart-plus"></i> Add</button></td></tr>
+<tr><td>39</td><td><strong>Chicken Handi Special</strong></td><td>1 KG</td><td>Rs. 4,000</td><td><button class="btn btn-order btn-sm"  onclick="window.location.href='order.html'"><i class="fas fa-shopping-bag"></i> Order</button></td><td><button class="btn btn-cart btn-sm" onclick="window.location.href='cart.html'" ><i class="fas fa-cart-plus"></i> Add</button></td></tr>
+<tr><td>40</td><td><strong>Mutton Handi Special</strong></td><td>1 KG</td><td>Rs. 6,500</td><td><button class="btn btn-order btn-sm"  onclick="window.location.href='order.html'"><i class="fas fa-shopping-bag"></i> Order</button></td><td><button class="btn btn-cart btn-sm" onclick="window.location.href='cart.html'" ><i class="fas fa-cart-plus"></i> Add</button></td></tr>
+<tr><td>41</td><td><strong>Chicken Malai Handi</strong></td><td>1 KG</td><td>Rs. 4,200</td><td><button class="btn btn-order btn-sm"  onclick="window.location.href='order.html'"><i class="fas fa-shopping-bag"></i> Order</button></td><td><button class="btn btn-cart btn-sm" onclick="window.location.href='cart.html'" ><i class="fas fa-cart-plus"></i> Add</button></td></tr>
+<tr><td>42</td><td><strong>Beef Malai Handi</strong></td><td>1 KG</td><td>Rs. 5,800</td><td><button class="btn btn-order btn-sm"  onclick="window.location.href='order.html'"><i class="fas fa-shopping-bag"></i> Order</button></td><td><button class="btn btn-cart btn-sm" onclick="window.location.href='cart.html'" ><i class="fas fa-cart-plus"></i> Add</button></td></tr>
+<tr><td>43</td><td><strong>Mutton Malai Handi</strong></td><td>1 KG</td><td>Rs. 6,800</td><td><button class="btn btn-order btn-sm"  onclick="window.location.href='order.html'"><i class="fas fa-shopping-bag"></i> Order</button></td><td><button class="btn btn-cart btn-sm" onclick="window.location.href='cart.html'" ><i class="fas fa-cart-plus"></i> Add</button></td></tr>
+<tr><td>44</td><td><strong>Chicken Rezala</strong></td><td>1 KG</td><td>Rs. 4,500</td><td><button class="btn btn-order btn-sm"  onclick="window.location.href='order.html'"><i class="fas fa-shopping-bag"></i> Order</button></td><td><button class="btn btn-cart btn-sm" onclick="window.location.href='cart.html'" ><i class="fas fa-cart-plus"></i> Add</button></td></tr>
+<tr><td>45</td><td><strong>Beef Rezala</strong></td><td>1 KG</td><td>Rs. 5,900</td><td><button class="btn btn-order btn-sm"  onclick="window.location.href='order.html'"><i class="fas fa-shopping-bag"></i> Order</button></td><td><button class="btn btn-cart btn-sm" onclick="window.location.href='cart.html'" ><i class="fas fa-cart-plus"></i> Add</button></td></tr>
+<tr><td>46</td><td><strong>Mutton Rezala</strong></td><td>1 KG</td><td>Rs. 6,900</td><td><button class="btn btn-order btn-sm"  onclick="window.location.href='order.html'"><i class="fas fa-shopping-bag"></i> Order</button></td><td><button class="btn btn-cart btn-sm" onclick="window.location.href='cart.html'" ><i class="fas fa-cart-plus"></i> Add</button></td></tr>
+<tr><td>47</td><td><strong>Chicken Angara</strong></td><td>1 KG</td><td>Rs. 4,800</td><td><button class="btn btn-order btn-sm"  onclick="window.location.href='order.html'"><i class="fas fa-shopping-bag"></i> Order</button></td><td><button class="btn btn-cart btn-sm" onclick="window.location.href='cart.html'" ><i class="fas fa-cart-plus"></i> Add</button></td></tr>
+<tr><td>48</td><td><strong>Beef Angara</strong></td><td>1 KG</td><td>Rs. 7,500</td><td><button class="btn btn-order btn-sm"  onclick="window.location.href='order.html'"><i class="fas fa-shopping-bag"></i> Order</button></td><td><button class="btn btn-cart btn-sm" onclick="window.location.href='cart.html'" ><i class="fas fa-cart-plus"></i> Add</button></td></tr>
+<tr><td>49</td><td><strong>Mutton Angara</strong></td><td>1 KG</td><td>Rs. 8,200</td><td><button class="btn btn-order btn-sm"  onclick="window.location.href='order.html'"><i class="fas fa-shopping-bag"></i> Order</button></td><td><button class="btn btn-cart btn-sm" onclick="window.location.href='cart.html'" ><i class="fas fa-cart-plus"></i> Add</button></td></tr>
+<tr><td>50</td><td><strong>Chef's Special Platter</strong></td><td>1 KG</td><td>Rs. 20,000</td><td><button class="btn btn-order btn-sm"  onclick="window.location.href='order.html'"><i class="fas fa-shopping-bag"></i> Order</button></td><td><button class="btn btn-cart btn-sm" onclick="window.location.href='cart.html'" ><i class="fas fa-cart-plus"></i> Add</button></td></tr>
 
-<!-- Baaki ka data same pattern me add karen -->
-
+<!-- Add remaining dishes similarly -->
 </tbody>
 </table>
 </div>
@@ -172,13 +255,13 @@ body {
 <!-- FOOTER -->
 <div class="footer">
 <p>&copy; 2026 <strong>Desi Rasoi</strong>. All Rights Reserved.</p>
-<p>📞 +92333-1234567 | WhatsApp: +92332-0987654</p>
+<p>📞 +92 333-1234567 </p>
 <p>📧 dasirasoireturant@gmail.com</p>
 <p>📍 123 Food Street, Rawalpindi, Pakistan</p>
 <p>
-Follow Us:
-<a href="#">Facebook</a> |
-<a href="#">Instagram</a>
+<a href="#"><i class="fab fa-facebook"></i></a>
+<a href="#"><i class="fab fa-instagram"></i></a>
+<a href="https://wa.me/#" target="_blank" class="whatsapp-icon"><i class="fab fa-whatsapp"></i></a>
 </p>
 </div>
 

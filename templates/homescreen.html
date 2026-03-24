@@ -65,7 +65,7 @@ transition:0.3s;
 }
 
 .nav-links a:hover{
-color:#c59d5f;
+color:#ffffff;
 }
 
 /* Hero */
@@ -151,12 +151,14 @@ overflow:hidden;
 border-radius:15px;
 box-shadow:0 5px 20px rgba(0,0,0,0.6);
 margin-bottom:25px;
+height: 200px;
 }
 
 .gallery-box img{
 width:100%;
 border-radius:15px;
 transition:0.5s;
+height: 200px;
 }
 
 .gallery-box:hover img{
@@ -189,20 +191,35 @@ object-fit:cover;
 }
 
 /* Footer */
-.footer{
-background:#000;
-padding:40px 0;
-text-align:center;
-margin-top:80px;
+.footer {
+    background-color: #222;
+    color: #ccc;
+    padding: 30px 20px;
+    text-align: center;
+    font-size: 14px;
 }
 
-.footer a{
-color:#c59d5f;
-text-decoration:none;
+.footer a {
+    color: #c59d5f;
+    margin: 0 5px;
+    text-decoration: none;
+    font-size: 18px;
 }
 
-.footer a:hover{
-text-decoration:underline;
+.footer a:hover {
+    color: #fff;
+}
+
+/* WhatsApp Icon */
+.footer .whatsapp-icon {
+    color: #25D366;
+    font-size: 20px;
+    transition: transform 0.3s, color 0.3s;
+}
+
+.footer .whatsapp-icon:hover {
+    transform: scale(1.2);
+    color: #128C7E;
 }
 
 @media(max-width:768px){
@@ -275,37 +292,64 @@ text-decoration:underline;
 </div>
 </div>
 
-
-
-<!-- CHEFS -->
+<!-- POPULAR DISHES -->
 <div class="container">
-<h2 class="section-title">Meet Our Master Chefs</h2>
-<div class="row">
+  <h2 class="section-title">Our Popular Dishes</h2>
+  <div class="row">
 
-{% for i in range(1,21) %}
-<div class="col-lg-3 col-md-4 col-sm-6">
-<div class="chef-card">
-<img src="{{ url_for('static', filename='images/chef.jpeg') }}" class="chef-img">
-<h4>Chef {{ i }}</h4>
-<p><strong>Specialty:</strong> Premium Cuisine</p>
-<p><strong>Experience:</strong> {{ 5+i }} Years</p>
-</div>
-</div>
-{% endfor %}
+    <div class="col-lg-3 col-md-4 col-sm-6">
+      <div class="card-custom">
+        <div class="gallery-box">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTY53Zww8_j72B0sOb6m4o4fOMO0eDtsvvwQ&s" alt="Butter Chicken">
+        </div>
+        <h4>Butter Chicken</h4>
+        <p>Rich and creamy butter chicken cooked with authentic spices.</p>
+      </div>
+    </div>
 
-</div>
+    <div class="col-lg-3 col-md-4 col-sm-6">
+      <div class="card-custom">
+        <div class="gallery-box">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlg7JYWWJNnY-MJVGm02itthRtcc105HPt4Q&s" alt="Biryani">
+        </div>
+        <h4>Chicken Biryani</h4>
+        <p>Fragrant basmati rice layered with tender meat and aromatic spices.</p>
+      </div>
+    </div>
+
+    <div class="col-lg-3 col-md-4 col-sm-6">
+      <div class="card-custom">
+        <div class="gallery-box">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlg7JYWWJNnY-MJVGm02itthRtcc105HPt4Q&s" alt="Seekh Kebabs">
+        </div>
+        <h4>Seekh Kebabs</h4>
+        <p>Grilled skewered meat with perfect spices, juicy and flavorful.</p>
+      </div>
+    </div>
+
+    <div class="col-lg-3 col-md-4 col-sm-6">
+      <div class="card-custom">
+        <div class="gallery-box">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZ7k5y_B4nnjQBNqMNyVyDQoAN_8RHZ4XYSw&s" alt="Mutton Korma">
+        </div>
+        <h4>Mutton Korma</h4>
+        <p>Rich and creamy Mutton Korma cooked with authentic spices.</p>
+      </div>
+    </div>
+
+  </div>
 </div>
 
 <!-- FOOTER -->
 <div class="footer">
 <p>&copy; 2026 <strong>Desi Rasoi</strong>. All Rights Reserved.</p>
-<p>📞 +92333-1234567 | WhatsApp: +92332-0987654</p>
+<p>📞 +92 333-1234567 </p>
 <p>📧 dasirasoireturant@gmail.com</p>
 <p>📍 123 Food Street, Rawalpindi, Pakistan</p>
 <p>
-Follow Us:
-<a href="#">Facebook</a> |
-<a href="#">Instagram</a>
+<a href="#"><i class="fab fa-facebook"></i></a>
+<a href="#"><i class="fab fa-instagram"></i></a>
+<a href="https://wa.me/#" target="_blank" class="whatsapp-icon"><i class="fab fa-whatsapp"></i></a>
 </p>
 </div>
 
