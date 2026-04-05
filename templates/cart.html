@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Desi Rasoi | Menu & Cart</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+body { 
+    font-family:'Poppins',sans-serif; 
+    background: #f9f9f9; 
+    padding: 20px 0 0 0; /* top padding for navbar */
+    color: #333;
+}
+h2, h3 { color: #222; }
+
+/* NAVBAR */
+.navbar-custom {
+    background-color: #000;
+    padding: 15px 40px;
+    width: 100%;
+    z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.navbar-custom .menu-title {
+    color: white;
+    font-size: 24px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.nav-links {
+    display: flex;
+    gap: 20px;
+}
+.nav-links a {
+    color: white;
+    font-weight: 500;
+    text-decoration: none;
+    transition: 0.3s;
+}
+.nav-links a:hover { color: white }
+
+.custom-container {
+    max-width: 1200px;
+    margin: 100px auto 0 auto; /* leave space for navbar */
+}
+
+/* Menu Card */
+.menu-card { 
+    border: none; 
+    border-radius: 12px; 
+    padding: 20px; 
+    margin-bottom: 20px; 
+    background: #fff; 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease;
+    height: 100%;
+}
+.menu-card:hover { transform: translateY(-5px); }
+.menu-card h4 { font-weight: 600; margin-bottom: 10px; }
+.menu-card p { margin: 5px 0; font-size: 14px; color: #555; }
+.btn-add { 
+    background: #ff5722; 
+    color: #fff; 
+    border-radius: 6px; 
+    padding: 8px 16px; 
+    font-weight: 500; 
+    transition: background 0.2s ease;
+}
+.btn-add:hover { background: #e64a19; }
+
+/* Modal */
+.modal-header { 
+    background: #ff5722; 
+    color: #fff; 
+    border-bottom: none;
+    border-radius: 12px 12px 0 0;
+}
+.modal-footer { border-top: none; }
+.modal-body input { width: 60px; text-align: center; margin: 0 5px; }
+
+/* Cart Styling */
+#cart-items { 
+    list-style: none; 
+    padding-left: 0; 
+    max-height: 500px; 
+    overflow-y: auto; 
+}
+#cart-items li { 
+    padding: 8px 12px; 
+    background: #fff; 
+    margin-bottom: 8px; 
+    border-radius: 6px; 
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    display: flex; 
+    justify-content: space-between;
+    font-weight: 500;
+}
+#grandTotal { color: #ff5722; font-weight: 600; }
+
+/* Sticky Cart */
+.sticky-cart {
+    position: sticky;
+    top: 120px;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+    width: 100%;
+    background: #000;
+    color: #ccc;
+    margin-top: 50px;
+    text-align: center;
+}
+.footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px 20px;
+}
+.footer a { color: #c59d5f; margin: 0 5px; text-decoration: none; font-size: 18px; }
+.footer a:hover { color: #fff; }
+
+/* WhatsApp Icon */
+.footer .whatsapp-icon { color: #25D366; font-size: 20px; transition: transform 0.3s, color 0.3s; }
+.footer .whatsapp-icon:hover { transform: scale(1.2); color: #128C7E; }
+
+@media(max-width:768px){
+    .nav-links { flex-direction: column; gap: 10px; margin-top: 10px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar-custom">
+    <div class="menu-title"><i class="fas fa-cart-plus"></i> Cart</div>
+    <div class="nav-links">
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('menu') }}">Menu</a>
+        <a href="{{ url_for('reservation') }}">Reservation</a>
+        <a href="{{ url_for('contact') }}">Contact</a>
+        <a href="{{ url_for('reviews') }}">Reviews</a>
+        <a href="{{ url_for('cart') }}">Cart</a>
+    </div>
+</div>
+
+<div class="container custom-container">
+    <div class="row">
+        <!-- MENU LEFT -->
+        <div class="col-md-10">
+            <h2 class="text-center" style="margin-bottom: 30px;">Menu</h2>
+            <div id="menu-list" class="row"></div>
+        </div>
+
+        <!-- CART RIGHT -->
+        <div class="col-md-2">
+            <div class="sticky-cart">
+                <h3>Cart</h3>
+                <ul id="cart-items"></ul>
+                <p><strong>Grand Total: Rs. <span id="grandTotal">0</span></strong></p>
+                <a href="{{ url_for('billing') }}">
+                    <button class="btn btn-primary">Billing</button>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="cartModal" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modalDishName">Dish</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body text-center">
+                <p>Weight: <span id="modalDishWeight"></span></p>
+                <p>Price per unit: Rs. <span id="modalDishPrice"></span></p>
+                <p>Quantity: 
+                    <button class="btn btn-default btn-xs" onclick="changeQty(-1)">-</button>
+                    <input type="number" id="modalQty" value="1" min="1">
+                    <button class="btn btn-default btn-xs" onclick="changeQty(1)">+</button>
+                </p>
+                <p><strong>Total: Rs. <span id="modalTotal"></span></strong></p>
+            </div>
+            <div class="modal-footer text-center">
+                <button class="btn btn-add" onclick="addToCart()">Add to Cart</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+    <div class="footer-inner">
+        <p>&copy; 2026 <strong>Desi Rasoi</strong>. All Rights Reserved.</p>
+        <p>📞 +92 333-1234567</p>
+        <p>📧 dasirasoireturant@gmail.com</p>
+        <p>📍 123 Food Street, Rawalpindi, Pakistan</p>
+        <p><a href="https://wa.me/#" target="_blank" class="whatsapp-icon"><i class="fab fa-whatsapp"></i> WhatsApp</a></p>
+    </div>
+</div>
+
+<script>
+let menuData = [];
+let currentDish = {};
+let cart = JSON.parse(localStorage.getItem('cartItems')) || []; // Load existing cart
+
+$(document).ready(function(){
+
+    // ✅ Clear cart on every reload
+    localStorage.removeItem('cartItems');
+    cart = [];
+
+    renderCart();
+
+    $.get("/api/menu", function(res){
+        if(res.success == 1){
+            menuData = res.data;
+            renderMenu();
+        } else {
+            alert("Failed to load menu: " + res.message);
+        }
+    });
+
+});
+
+function renderMenu(){
+    let html = '';
+    menuData.forEach(dish => {
+        html += `
+        <div class="col-md-6">
+            <div class="menu-card text-center">
+                <h4>${dish.name}</h4>
+                <p>Weight: ${dish.weight}</p>
+                <p>Price: Rs. ${dish.price.toFixed(2)}</p>
+                <button class="btn btn-add" onclick='openModal(${JSON.stringify(dish)})'>Add to Cart <i class="fa fa-shopping-cart"></i></button>
+            </div>
+        </div>`;
+    });
+    $("#menu-list").html(html);
+}
+
+function openModal(dish){
+    currentDish = {...dish};
+    $("#modalDishName").text(dish.name);
+    $("#modalDishWeight").text(dish.weight);
+    $("#modalDishPrice").text(dish.price.toFixed(2));
+    $("#modalQty").val(1);
+    $("#modalTotal").text(dish.price.toFixed(2));
+    $("#cartModal").modal('show');
+}
+
+function changeQty(val){
+    let qty = parseInt($("#modalQty").val()) + val;
+    if(qty < 1) qty = 1;
+    $("#modalQty").val(qty);
+    $("#modalTotal").text((qty * currentDish.price).toFixed(2));
+}
+
+function addToCart(){
+    let qty = parseInt($("#modalQty").val());
+    let item = {...currentDish, quantity: qty, total: qty * currentDish.price};
+
+    // Check if dish already exists in cart
+    let index = cart.findIndex(i => i.name === item.name);
+    if(index !== -1){
+        cart[index].quantity += qty;
+        cart[index].total = cart[index].quantity * cart[index].price;
+    } else {
+        cart.push(item);
+    }
+
+    // Save cart to localStorage
+    localStorage.setItem('cartItems', JSON.stringify(cart));
+
+    renderCart();
+    $("#cartModal").modal('hide');
+}
+
+function renderCart(){
+    let html = '';
+    let grandTotal = 0;
+    cart.forEach(item=>{
+        html += `<li>${item.name} x ${item.quantity} <span>Rs. ${item.total.toFixed(2)}</span></li>`;
+        grandTotal += item.total;
+    });
+    $("#cart-items").html(html);
+    $("#grandTotal").text(grandTotal.toFixed(2));
+}
+</script>
+
+</body>
+</html>

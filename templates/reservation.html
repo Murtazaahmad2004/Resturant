@@ -1,93 +1,364 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Reservations Management</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <script src="{{ url_for('static', filename='script/script.js') }}"></script>
+<meta charset="UTF-8">
+<title>Desi Rasoi | Reservation</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+<style>
+    /* Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+    background: linear-gradient(135deg, #f4f6f9, #e9ecef);
+    font-family:'Poppins',sans-serif;
+}
+
+/* NAVBAR */
+.navbar-custom {
+         background-color: #000000;
+         padding: 15px 40px;
+         width: 100%;
+         z-index: 1000;
+         position: fixed;   /* ✅ change */
+         top: 0;            /* ✅ important */
+         left: 0;
+         display: flex;
+         justify-content: space-between; /* menu-title left, links right */
+         align-items: center;
+         flex-wrap: wrap;
+         }
+         .navbar-custom .menu-title {
+         color: white;
+         font-size: 24px;
+         font-weight: 600;
+         display: flex;
+         align-items: center;
+         gap: 10px; /* space between icon and text */
+         }
+         .nav-links {
+         display: flex;
+         gap: 25px;
+         }
+         .nav-links a {
+         color: white;
+         font-weight: 500;
+         text-decoration: none;
+         transition: 0.3s;
+         }
+         .nav-links a:hover {
+         color: #ffffff;
+         }
+
+.custom-container {
+    max-width: 700px;
+    margin-top: 80px;
+}
+
+/* CARD */
+.form-card {
+    max-width: 650px;
+    margin: 40px auto;
+    background: #fff;
+    padding: 35px;
+    margin-top: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+/* SECTION TITLE */
+.section-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: #000000;
+    border-left: 4px solid #000000;
+    padding-left: 10px;
+}
+
+/* INPUT GROUP */
+.input-group {
+    margin-top: 10px;
+}
+
+.input-group-addon {
+    background: #000000;
+    color: white;
+    border: none;
+}
+
+/* INPUTS */
+.form-control {
+    border-radius: 6px;
+    border: 1px solid #ddd;
+    box-shadow: none;
+    margin-top: 10px;
+    overflow: hidden;
+}
+
+textarea.form-control {
+    width: 100%;
+    max-width: 100%;
+    resize: vertical;
+    overflow: auto;
+}
+
+/* CHECKBOX */
+.checkbox-group label {
+    display: block;
+    padding: 5px 0;
+    cursor: pointer;
+}
+
+/* BUTTON */
+.btn-primary {
+    background: linear-gradient(45deg, #000000, #100f0f);
+    border: none;
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 8px;
+    margin-top: 25px;
+    transition: 0.3s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+    /* ===== FOOTER ===== */
+.footer {
+    background: #000000;
+    color: #ccc;
+    padding: 30px 20px;
+    text-align: center;
+    font-size: 14px;
+    margin-top: 50px;
+}
+
+.footer a {
+    color: #c59d5f;
+    margin: 0 5px;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.footer a:hover {
+    color: #fff;
+}
+
+/* WhatsApp Icon */
+.footer .whatsapp-icon {
+    color: #25D366;
+    font-size: 20px;
+    transition: transform 0.3s, color 0.3s;
+}
+
+.footer .whatsapp-icon:hover {
+    transform: scale(1.2);
+    color: #128C7E;
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+    .form-card {
+        padding: 20px;
+    }
+}
+</style>
+
 </head>
+
 <body>
-    <div class="navbar">
-        <h2>Reservations Management</h2>
-    </div>
-    <div class="container">
-        {% if error %}
-            <div class="alert alert-danger">{{ error }}</div>
-        {% endif %}
-        {% if success %}
-            <div class="alert alert-success">{{ success }}</div>
-        {% endif %}
+
+<!-- NAVBAR -->
+      <div class="navbar-custom">
+         <div class="menu-title">
+            <i class="fas fa-chair"></i> Reservation Form
+         </div>
+         <div class="nav-links">
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('menu') }}">Menu</a>
+            <a href="{{ url_for('reservation') }}">Reservation</a>
+            <a href="{{ url_for('contact') }}">Contact</a>
+            <a href="{{ url_for('reviews') }}">Reviews</a>
+            <a href="{{ url_for('cart') }}">Cart</a>
+         </div>
+      </div>
+
+<div class="container custom-container">
+
+    {% if error %}
+        <div class="alert alert-danger text-center">{{ error }}</div>
+    {% endif %}
+    {% if success %}
+        <div class="alert alert-success text-center">{{ success }}</div>
+    {% endif %}
+
+    <div class="form-card">
+
         <form method="POST" action="/reservation">
-            <label for="res_id">Reservation ID:</label>
-            <input type="text" id="res_id" name="res_id" class="form-control" value="{{ res_id }}" readonly>
 
-            <label for="name">Customer Name:</label>
-            <input type="text" id="name" name="name" class="form-control" placeholder="Enter your Name" required>
+    <!-- CUSTOMER INFO -->
+    <div class="section-title">Customer Information</div>
 
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" class="form-control" placeholder="Enter your Email" required>
-
-            <label for="phone">Phone No:</label>
-            <input type="number" id="phone" name="phone" class="form-control" placeholder="Enter Phoe Number" required>
-
-            <label for="reservation_date">Reservation Date:</label>
-            <input type="date" id="reservation_date" name="reservation_date" class="form-control" required>
-
-            <label for="reservation_time">Reservation Time:</label>
-            <input type="time" id="reservation_time" name="reservation_time" class="form-control" required>
-
-            <label for="guests">Number of Guests:</label>
-            <input type="number" id="guests" name="guests" class="form-control" placeholder="Enter No. of Guests" required oninput="updateAmount()">
-
-            <label>Special Requests:</label><br>
-            <input type="checkbox" name="special_requests" value="Wheelchair Access"> Wheelchair Access<br>
-            <input type="checkbox" name="special_requests" value="Window Seat"> Window Seat<br>
-            <input type="checkbox" name="special_requests" value="Quiet Area"> Quiet Area<br>
-            <input type="checkbox" name="special_requests" value="High Chair"> High Chair<br>
-            <input type="checkbox" name="special_requests" value="Celebration"> Celebration<br>
-            <input type="checkbox" name="special_requests" value="Nill"> Nill<br>
-
-            <label for="other_request">Other Requests:</label>
-            <textarea name="other_request" class="form-control" placeholder="Type any additional requests..."></textarea>
-
-            <label for="payment">Payment Method:</label>
-            <select id="payment" name="payment" class="form-control" onchange="toggleTransactionID()">
-                <option value="Cash">Cash On Delivery</option>
-                <option value="Credit Card">Credit Card</option>
-                <option value="Debit Card">Debit Card</option>
-                <option value="Jazz Cash">Jazz Cash</option>
-                <option value="EasyPaisa">EasyPaisa</option>
-            </select>
-
-            <div id="transaction_id_field" class="hidden">
-                <label for="trans_id">Transaction ID:</label>
-                <input type="text" id="trans_id" name="trans_id" class="form-control" value="{{ trans_id }}" readonly>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-id-badge"></i></span>
+                <input type="text" name="res_id" class="form-control" value="{{ res_id }}" readonly>
             </div>
+        </div>
 
-            <label for="amount">Amount:</label>
-            <input type="number" id="amount" name="amount" class="form-control" placeholder="Enter Amount" required>
-
-            <label for="status">Reservation Status:</label>
-            <select id="status" name="status" class="form-control">
-                <option value="confirmed">Confirmed</option>
-            </select>
-
-            <button type="submit" class="btn btn-primary">Submit Reservation</button>
-        </form>
+        <div class="col-md-6">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                <input type="text" name="name" class="form-control" placeholder="Customer Name" required>
+            </div>
+        </div>
     </div>
-    <div class="footer">
-        <p>&copy; 2023 Desi Rasoi. All rights reserved.</p>
-        <p>Contact: +92333-1234567 | WhatsApp: +92332-0987654</p>
-        <p>Email: dasirasoireturant@gmail.com</p>
-        <p>Address: 123 Food Street, Rawalpindi, Pakistan</p>
-        <p>Website: www.dasirasoi.com</p>
-        <p>Follow us on social media: 
-            <a href="https://www.facebook.com/dasirasoi">Facebook</a> | 
-            <a href="https://www.instagram.com/dasirasoi">Instagram</a>
-        </p>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                <input type="email" name="email" class="form-control" placeholder="Email Address" required>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                <input type="number" name="phone" class="form-control" placeholder="Phone Number" required>
+            </div>
+        </div>
     </div>
+
+    <!-- RESERVATION DETAILS -->
+    <div class="section-title">Reservation Details</div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                <input type="date" name="reservation_date" class="form-control" required>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-clock"></i></span>
+                <input type="time" name="reservation_time" class="form-control" required>
+            </div>
+        </div>
+    </div>
+
+    <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-users"></i></span>
+        <input type="number" id="guests" name="guests" class="form-control" placeholder="Number of Guests" required oninput="calculateAmount()">
+    </div>
+
+    <!-- SPECIAL REQUEST -->
+    <div class="section-title">Special Requests</div>
+
+    <div class="checkbox-group">
+        <label><i class="fa fa-wheelchair"></i> <input type="checkbox" name="special_requests" value="Wheelchair"> Wheelchair Access</label>
+        <label><i class="fa fa-window-maximize"></i> <input type="checkbox" name="special_requests" value="Window"> Window Seat</label>
+        <label><i class="fa fa-volume-mute"></i> <input type="checkbox" name="special_requests" value="Quiet"> Quiet Area</label>
+        <label><i class="fa fa-baby"></i> <input type="checkbox" name="special_requests" value="High Chair"> High Chair</label>
+        <label><i class="fa fa-cake-candles"></i> <input type="checkbox" name="special_requests" value="Celebration"> Celebration</label>
+    </div>
+
+    <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-pen"></i></span>
+        <textarea name="other_request" class="form-control" placeholder="Additional requests..."></textarea>
+    </div>
+
+    <!-- PAYMENT -->
+    <div class="section-title">Payment Details</div>
+
+    <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
+        <select name="payment" class="form-control" onchange="toggleTransactionID()">
+            <option>Cash On Delivery</option>
+            <option>Credit Card</option>
+            <option>Debit Card</option>
+            <option>Jazz Cash</option>
+            <option>EasyPaisa</option>
+        </select>
+    </div>
+
+    <div id="transaction_id_field" style="display:none;">
+        <div class="input-group">
+            <span class="input-group-addon"><i class="fa fa-receipt"></i></span>
+            <input type="text" name="trans_id" class="form-control" value="{{ trans_id }}" readonly>
+        </div>
+    </div>
+
+    <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-money-bill"></i></span>
+        <input type="number" id="amount" name="amount" class="form-control" placeholder="Amount" value="{{ amount }}" readonly>
+    </div>
+
+    <div class="input-group">
+        <span class="input-group-addon"><i class="fa fa-check-circle"></i></span>
+        <select name="status" class="form-control">
+            <option value="confirmed">Confirmed</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary">
+        🚀 Confirm Reservation
+    </button>
+
+</form>
+
+    </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+<p>&copy; 2026 <strong>Desi Rasoi</strong>. All Rights Reserved.</p>
+<p>📞 +92 333-1234567 </p>
+<p>📧 dasirasoireturant@gmail.com</p>
+<p>📍 123 Food Street, Rawalpindi, Pakistan</p>
+<p>
+<a href="https://wa.me/#" target="_blank" class="whatsapp-icon"><i class="fab fa-whatsapp"></i> Whatsapp</a>
+</p>
+</div>
+
+<script>
+function toggleTransactionID() {
+    var payment = document.querySelector('[name="payment"]').value;
+    var field = document.getElementById("transaction_id_field");
+
+    if (payment === "Jazz Cash" || payment === "EasyPaisa" || payment === "Credit Card" || payment === "Debit Card") {
+        field.style.display = "block";
+    } else {
+        field.style.display = "none";
+    }
+}
+
+function calculateAmount() {
+    let guests = document.getElementById("guests").value;
+    let amountField = document.getElementById("amount");
+
+    if (guests && guests > 0) {
+        amountField.value = guests * 1000;
+    } else {
+        amountField.value = "";
+    }
+}
+</script>
+
 </body>
 </html>

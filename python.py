@@ -1,8 +1,11 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, jsonify, render_template, request
 from flask_cors import CORS
 import mysql.connector
 import random
 import string
+
+import requests
 
 app = Flask(__name__)
 CORS(app)
@@ -42,15 +45,22 @@ def review():
 def contact():
     return render_template('contact.html')
 
+# Billing Page
+@app.route('/billing.html')
+def billing():
+    return render_template('billing.html')
 # Order Page
-def generate_random_orderid(length=4):
+def generate_random_orderid(length=8):
     return 'ORDER-' + ''.join(random.choices(string.digits, k=length))
 
-def generate_random_customerid(length=5):
+def generate_random_customerid(length=8):
     return 'CUST-' + ''.join(random.choices(string.digits, k=length))
 
-def generate_random_trans_id(length=4):
+def generate_random_trans_id(length=8):
     return 'TRANS-' + ''.join(random.choices(string.digits, k=length))
+
+def generate_random_res_id(length=8):
+    return 'RESERV-' + ''.join(random.choices(string.digits, k=length))
 
 # Route for GET (display form with auto-generated IDs)
 @app.route('/order.html')
@@ -79,9 +89,6 @@ def orders():
 
         if payment_mtd == 'Cash':
             trans_id = 'Nill'
-        else:
-            trans_id = request.form.get('trans_id')
-
         try:
             conn = mysql.connector.connect(**db_config)
             cursor = conn.cursor()
@@ -106,7 +113,8 @@ def orders():
 
         return render_template(
             'order.html', 
-            error=error, 
+            success=success if 'success' in locals() else None,
+            error=error if 'error' in locals() else None,
             orderid=orderid, 
             customerid=customerid, 
             trans_id=trans_id
@@ -122,7 +130,6 @@ def orders():
 @app.route('/reservation', methods=['GET', 'POST'])
 def reservation():
     if request.method == 'POST':
-
         res_id = request.form.get('res_id')
         name = request.form.get('name')
         email = request.form.get('email')
@@ -179,7 +186,7 @@ def reservation():
         )
 
     # GET request
-    res_id = generate_random_trans_id()
+    res_id = generate_random_res_id()
     trans_id = generate_random_trans_id()
     return render_template('reservation.html', res_id=res_id, trans_id=trans_id)
 
@@ -221,5 +228,123 @@ def reviews():
 
     return render_template('reviews.html')
 
+# Add Menu API POST request
+@app.route('/add_menu', methods=['POST'])
+def add_menu():
+    data = request.json
+
+    conn = None
+    cursor = None
+
+    try:
+        conn = mysql.connector.connect(**db_config)
+        cursor = conn.cursor()
+
+        for item in data:
+            name = item['name']
+            weight = item['weight']
+            price = item['price']
+
+            query = "INSERT INTO menu (name, weight, price) VALUES (%s, %s, %s)"
+            cursor.execute(query, (name, weight, price))
+
+        conn.commit()
+
+        return jsonify({"message": "Menu added successfully"})
+
+    except Exception as e:
+        return jsonify({"error": str(e)})
+
+    finally:
+        if cursor is not None:
+            cursor.close()
+        if conn is not None:
+            conn.close()
+
+# Get Menu List From API
+@app.route('/get_menu', methods=['GET'])
+def get_menu():
+    conn = None
+    cursor = None
+
+    try:
+        conn = mysql.connector.connect(**db_config)
+        cursor = conn.cursor()
+
+        cursor.execute("SELECT * FROM menu")
+        result = cursor.fetchall()
+
+        menu = []
+        for row in result:
+            menu.append({
+                "id": row[0],
+                "name": row[1],
+                "weight": row[2],
+                "price": row[3]
+            })
+
+        return jsonify(menu)
+
+    except Exception as e:
+        return jsonify({"error": str(e)})
+
+    finally:
+        if cursor is not None:
+            cursor.close()
+        if conn is not None:
+            conn.close()
+
+# code for fetch data from postman
+@app.route('/fetch_menu', methods=['POST'])
+def fetch_menu():
+    try:
+        conn = mysql.connector.connect(**db_config)
+        cursor = conn.cursor()
+        cursor.execute("SELECT id, name, weight, price FROM menu")
+        rows = cursor.fetchall()
+
+        menu_list = []
+        for row in rows:
+            menu_list.append({
+                "id": row[0],
+                "dish_name": row[1],
+                "quantity": row[2],
+                "price": row[3]
+            })
+
+        return jsonify({
+            "success": 1,
+            "data": menu_list
+        })
+
+    except Exception as e:
+        return jsonify({
+            "success": 0,
+            "message": str(e)
+        })
+
+@app.route('/api/menu', methods=['GET'])
+def fetch_api_menu():
+    try:
+        conn = mysql.connector.connect(**db_config)
+        cursor = conn.cursor()
+        cursor.execute("SELECT id, name, weight, price FROM menu")
+        rows = cursor.fetchall()
+        menu_list = []
+        for row in rows:
+            menu_list.append({
+                "id": row[0],
+                "name": row[1],
+                "weight": row[2],
+                "price": float(row[3])
+            })
+        return jsonify({"success": 1, "data": menu_list})
+    except Exception as e:
+        return jsonify({"success": 0, "message": str(e)})
+    finally:
+        if cursor: cursor.close()
+        if conn: conn.close()
+
+# Run the Flask app
 if __name__ == '__main__':
     app.run(debug=True)

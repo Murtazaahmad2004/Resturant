@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Desi Rasoi | Fine Dining Experience</title>
+<title>Desi Rasoi | Home</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script src="{{ url_for('static', filename='script/script.js') }}"></script>
@@ -37,6 +37,18 @@ justify-content:space-between;
 align-items:center;
 }
 
+.nav-links a{
+color:white;
+margin-left:25px;
+font-weight:500;
+text-decoration:none;
+transition:0.3s;
+}
+
+.nav-links a:hover{
+color:#ffffff;
+}
+
 .logo{
 display:flex;
 align-items:center;
@@ -54,18 +66,6 @@ border:2px solid #c59d5f;
 font-size:22px;
 font-weight:600;
 letter-spacing:1px;
-}
-
-.nav-links a{
-color:white;
-margin-left:25px;
-font-weight:500;
-text-decoration:none;
-transition:0.3s;
-}
-
-.nav-links a:hover{
-color:#ffffff;
 }
 
 /* Hero */
@@ -243,10 +243,12 @@ object-fit:cover;
 </div>
 
 <div class="nav-links">
-<a href="{{ url_for('menu') }}">Menu</a>
-<a href="{{ url_for('reservation') }}">Reservation</a>
-<a href="{{ url_for('contact') }}">Contact</a>
-<a href="{{ url_for('reviews') }}">Reviews</a>
+  <a href="{{ url_for('home') }}">Home</a>
+  <a href="{{ url_for('menu') }}">Menu</a>
+  <a href="{{ url_for('reservation') }}">Reservation</a>
+  <a href="{{ url_for('contact') }}">Contact</a>
+  <a href="{{ url_for('reviews') }}">Reviews</a>
+  <a href="{{ url_for('cart') }}">Cart</a>
 </div>
 </div>
 
@@ -342,15 +344,13 @@ object-fit:cover;
 
 <!-- FOOTER -->
 <div class="footer">
-<p>&copy; 2026 <strong>Desi Rasoi</strong>. All Rights Reserved.</p>
-<p>📞 +92 333-1234567 </p>
-<p>📧 dasirasoireturant@gmail.com</p>
-<p>📍 123 Food Street, Rawalpindi, Pakistan</p>
-<p>
-<a href="#"><i class="fab fa-facebook"></i></a>
-<a href="#"><i class="fab fa-instagram"></i></a>
-<a href="https://wa.me/#" target="_blank" class="whatsapp-icon"><i class="fab fa-whatsapp"></i></a>
-</p>
+  <p>&copy; 2026 <strong>Desi Rasoi</strong>. All Rights Reserved.</p>
+  <p>📞 +92 333-1234567 </p>
+  <p>📧 dasirasoireturant@gmail.com</p>
+  <p>📍 123 Food Street, Rawalpindi, Pakistan</p>
+  <p>
+  <a href="https://wa.me/#" target="_blank" class="whatsapp-icon"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+  </p>
 </div>
 
 </body>

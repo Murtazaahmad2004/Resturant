@@ -3,154 +3,367 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap + Icons -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <script src="{{ url_for('static', filename='script/script.js') }}"></script>
-    <title>Order Management</title>
+
+    <title>Desi Rasoi | Order</title>
+
+    <style>
+        /* Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        body {
+            background: linear-gradient(135deg, #f4f6f9, #e9ecef);
+            font-family:'Poppins',sans-serif;
+        }
+
+        /* NAVBAR */
+.navbar-custom {
+         background-color: #000000;
+         padding: 15px 40px;
+         width: 100%;
+         z-index: 1000;
+         position: fixed;   /* ✅ change */
+         top: 0;            /* ✅ important */
+         left: 0;
+         display: flex;
+         justify-content: space-between; /* menu-title left, links right */
+         align-items: center;
+         flex-wrap: wrap;
+         }
+         .navbar-custom .menu-title {
+         color: white;
+         font-size: 24px;
+         font-weight: 600;
+         display: flex;
+         align-items: center;
+         gap: 10px; /* space between icon and text */
+         }
+         .nav-links {
+         display: flex;
+         gap: 25px;
+         }
+         .nav-links a {
+         color: white;
+         font-weight: 500;
+         text-decoration: none;
+         transition: 0.3s;
+         }
+         .nav-links a:hover {
+         color: #ffffff;
+         }
+
+.custom-container {
+    max-width: 700px;
+    margin-top: 100px;
+}
+
+.form-card {
+    max-width: 650px;
+    margin: 40px auto;
+    background: #fff;
+    padding: 35px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: #000000;
+    border-left: 4px solid #000000;
+    padding-left: 10px;
+}
+
+.input-group {
+    margin-top: 12px;
+}
+
+.input-group-addon {
+    background: #000000;
+    color: white;
+    border: none;
+}
+
+.form-control {
+    margin-top: 10px;
+    border-radius: 6px;
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, #000000, #100f0f);
+    border: none;
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 8px;
+    margin-top: 25px;
+}
+
+        h3 {
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        label {
+            margin-top: 10px;
+        }
+
+        .btn-primary:hover {
+            background: #393b39;
+        }
+
+        .input-group .btn {
+            background: #3498db;
+            color: #fff;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* CARD */
+.form-card {
+    max-width: 650px;
+    margin: 40px auto;
+    background: #fff;
+    padding: 35px;
+    margin-top: 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+        /* ===== FOOTER ===== */
+.footer {
+    background: #000000;
+    color: #ccc;
+    padding: 30px 20px;
+    text-align: center;
+    font-size: 14px;
+    margin-top: 90px;
+}
+
+.footer a {
+    color: #c59d5f;
+    margin: 0 5px;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.footer a:hover {
+    color: #fff;
+}
+
+/* WhatsApp Icon */
+.footer .whatsapp-icon {
+    color: #25D366;
+    font-size: 20px;
+    transition: transform 0.3s, color 0.3s;
+}
+
+.footer .whatsapp-icon:hover {
+    transform: scale(1.2);
+    color: #128C7E;
+}
+    </style>
 </head>
+
 <body>
-    <div class="navbar">
-        <h2>Order Management</h2>
-    </div>  
-<div class="container">
-    {% if error %}
-        <div class="alert alert-danger">{{ error }}</div>
-    {% endif %}
-    {% if success %}
-        <div class="alert alert-success">{{ success }}</div>
-    {% endif %}
-<form method="POST" action="/order">
-    <h3>Order Details</h3>
-    
-    <label for="orderid">Order ID:</label>
-    <input type="text" id="orderid" name="orderid" class="form-control" value="{{ orderid }}" readonly>
 
-    <label for="customerid">Customer ID:</label>
-    <input type="text" id="customerid" name="customerid" class="form-control" value="{{ customerid }}" readonly>
+<!-- NAVBAR -->
+      <div class="navbar-custom">
+         <div class="menu-title">
+            <i class="fas fa-utensils"></i> Order Management
+         </div>
+         <div class="nav-links">
+            <a href="{{ url_for('home') }}">Home</a>
+            <a href="{{ url_for('menu') }}">Menu</a>
+            <a href="{{ url_for('reservation') }}">Reservation</a>
+            <a href="{{ url_for('contact') }}">Contact</a>
+            <a href="{{ url_for('reviews') }}">Reviews</a>
+            <a href="{{ url_for('cart') }}">Cart</a>
+         </div>
+      </div>
 
-    <label for="customername">Customer Name:</label>
-    <input type="text" id="customername" name="customername" class="form-control" placeholder="Enter Customer Name" required>
+<div class="container custom-container">
 
-    <label for="orderdate">Order Date:</label>
-    <input type="date" id="orderdate" name="orderdate" class="form-control" placeholder="Enter Order Date" required>
+    <div class="form-card">
 
-    <label for="address">Address:</label>
-    <input type="text" id="address" name="address" class="form-control" placeholder="Enter your Address" required>
+        <form method="POST" action="/order">
 
-    <label for="productname">Dish Name:</label>
-    <select id="productname" name="productname" class="form-control" required onchange="setPrice()">
-        <option value="">Select Dish</option>
-        <option value="Chicken Biryani">Chicken Biryani</option>
-        <option value="Beef Biryani">Beef Biryani</option>
-        <option value="Mutton Biryani">Mutton Biryani</option>
-        <option value="Pulao">Pulao</option>
-        <option value="Nihari">Nihari</option>
-        <option value="Haleem">Haleem</option>
-        <option value="Chapli Kebab">Chapli Kebab</option>
-        <option value="Seek Kebab">Seek Kebab</option>
-        <option value="Karahi Chicken">Karahi Chicken</option>
-        <option value="Karahi Mutton">Karahi Mutton</option>
-        <option value="Dum Pukht">Dum Pukht</option>
-        <option value="BBQ Tikka">BBQ Tikka</option>
-        <option value="Malai Boti">Malai Boti</option>
-        <option value="Beef Roll">Beef Roll</option>
-        <option value="Chicken Roll">Chicken Roll</option>
-        <option value="Tandoori Chicken">Tandoori Chicken</option>
-        <option value="Paneer Tikka">Paneer Tikka</option>
-        <option value="Chana Chaat">Chana Chaat</option>
-        <option value="Samosa">Samosa</option>
-        <option value="Pakora">Pakora</option>
-        <option value="Paya">Paya</option>
-        <option value="Fish Fry">Fish Fry</option>
-        <option value="Prawn Masala">Prawn Masala</option>
-        <option value="Shami Kebab">Shami Kebab</option>
-        <option value="Katakat">Katakat</option>
-        <option value="Mutton Ribs">Mutton Ribs</option>
-        <option value="Aloo Gosht">Aloo Gosht</option>
-        <option value="Chicken Handi">Chicken Handi</option>
-        <option value="Butter Chicken">Butter Chicken</option>
-        <option value="Chicken Jalfrezi">Chicken Jalfrezi</option>
-        <option value="Beef Kofta">Beef Kofta</option>
-        <option value="Mutton Qorma">Mutton Qorma</option>
-        <option value="Tawa Chicken">Tawa Chicken</option>
-        <option value="Makhni Handi">Makhni Handi</option>
-        <option value="Kunna">Kunna</option>
-        <option value="Sindhi Biryani">Sindhi Biryani</option>
-        <option value="BBQ Platter">BBQ Platter</option>
-        <option value="Mix Grill">Mix Grill</option>
-        <option value="Hyderabadi Biryani">Hyderabadi Biryani</option>
-        <option value="Chicken Qeema">Chicken Qeema</option>
-        <option value="Bhuna Gosht">Bhuna Gosht</option>
-        <option value="Anda Curry">Anda Curry</option>
-        <option value="Dal Makhni">Dal Makhni</option>
-        <option value="Dal Tadka">Dal Tadka</option>
-        <option value="Baingan Bharta">Baingan Bharta</option>
-        <option value="Gobi Aloo">Gobi Aloo</option>
-        <option value="Vegetable Biryani">Vegetable Biryani</option>
-        <option value="Matar Paneer">Matar Paneer</option>
-        <option value="Zarda">Zarda</option>
-        <option value="Shher Khurma">Shher Khurma</option>
-        <option value="Kheer">Kheer</option>
-        <option value="Shahi Tukray">Shahi Tukray</option>
-        <option value="Ras Malai">Ras Malai</option>
-        <option value="Gajar Ka Halwa">Gajar Ka Halwa</option>
-        <option value="Fruit Trifle">Fruit Trifle</option>
-    </select>
+            <!-- CUSTOMER INFO -->
+            <div class="section-title">Customer Information</div>
 
-    <label for="quantity">Quantity:</label>
-    <div class="input-group">
-        <span class="input-group-btn">
-            <button type="button" class="btn btn-default" onclick="decreaseQuantity()"><i class="fas fa-minus"></i></button>
-        </span>
-        <input type="number" id="quantity" name="quantity" class="form-control" value="1" min="1" required onchange="updateTotalPrice()">
-        <span class="input-group-btn">
-            <button type="button" class="btn btn-default" onclick="increaseQuantity()"><i class="fas fa-plus"></i></button>
-        </span>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-id-badge"></i></span>
+                        <input type="text" name="orderid" class="form-control" value="{{ orderid }}" readonly>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="fa fa-id-card"></i></span>
+                        <input type="text" name="customerid" class="form-control" value="{{ customerid }}" readonly>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                <input type="text" name="customername" class="form-control" placeholder="Customer Name" required>
+            </div>
+
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                <input type="date" name="orderdate" class="form-control" required>
+            </div>
+
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-map-marker"></i></span>
+                <input type="text" name="address" class="form-control" placeholder="Address" required>
+            </div>
+
+            <!-- Dynamic Menu -->
+            <div class="section-title">Order Details</div>
+
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-utensils"></i></span>
+                <select id="productname" name="productname" class="form-control" onchange="setPrice()" required>
+                    <option>Loading...</option>
+                </select>
+            </div>
+
+            <!-- Quantity -->
+            <div class="input-group">
+                <span class="input-group-addon">Qty</span>
+                <input type="number" id="quantity" name="quantity" value="1" min="1" class="form-control" onchange="updateTotal()">
+            </div>
+
+            <!-- Price -->
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-money-bill"></i></span>
+                <input type="number" id="price" name="price" class="form-control" readonly placeholder="Total Price">
+            </div>
+
+            <!-- PAYMENT -->
+            <div class="section-title">Payment Details</div>
+            
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-location-dot"></i></span>
+                <select name="delivery" class="form-control">
+                <option>Home Delivery</option>
+                <option>PickUP</option>
+            </select>
+            </div>
+
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-money-bill"></i></span>
+                <select id="payment_mtd" name="payment_mtd" class="form-control" onchange="toggleTransaction()">
+                    <option value="Cash">Cash</option>
+                    <option value="JazzCash">JazzCash</option>
+                    <option value="EasyPaisa">EasyPaisa</option>
+                </select>
+            </div>
+
+        <div id="transaction_id_field" style="display:none;">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-receipt"></i></span>
+                <input type="text" name="trans_id" class="form-control" value="{{ trans_id }}" readonly>
+            </div>
+        </div>
+
+            <button type="submit" class="btn btn-primary">
+                🚀 Place Order
+            </button>
+
+        </form>
+
     </div>
-
-    <label for="price">Price:</label>
-    <input type="number" id="price" name="price" class="form-control" placeholder="Enter Price" required>
-
-    <label for="delivery">Delivery:</label>
-    <select id="delivery" name="delivery" class="form-control" required>
-        <option value="Home Delivery">Home Delivery</option>
-        <option value="PickUP">PickUP</option>
-    </select>
-
-    <label for="payment_sts">Payment Status</label>
-    <select id="payment_sts" name="payment_sts" class="form-control" required>
-        <option value="confirmed">Confirmed</option>
-    </select>
-
-    <label for="payment_mtd">Payment:</label>
-    <select id="payment_mtd" name="payment_mtd" class="form-control" onchange="toggleTransactionID()" required>
-        <option value="Cash">Cash On Delivery</option>
-        <option value="Credit Card">Credit Card</option>
-        <option value="Debit Card">Debit Card</option>
-        <option value="Jazz Cash">Jazz Cash</option>
-        <option value="EasyPaisa">EasyPaisa</option>
-    </select>
-
-    <div id="transaction_id_field" class="hidden">
-        <label for="trans_id">Transaction ID:</label>
-        <input type="text" id="trans_id" name="trans_id" class="form-control" value="{{ trans_id }}" readonly>
-    </div><br>
-
-    <button type="submit" class="btn btn-primary">Submit Order</button>
-</form>
 </div>
-    <div class="footer">
-        <p>&copy; 2023 Desi Rasoi. All rights reserved.</p>
-        <p>Contact: +92333-1234567 | WhatsApp: +92332-0987654</p>
-        <p>Email: dasirasoireturant@gmail.com</p>
-        <p>Address: 123 Food Street, Rawalpindi, Pakistan</p>
-        <p>Website: www.dasirasoi.com</p>
-        <p>Follow us on social media: 
-            <a href="https://www.facebook.com/dasirasoi">Facebook</a> | 
-            <a href="https://www.instagram.com/dasirasoi">Instagram</a>
-        </p>
-    </div>
+
+<!-- FOOTER -->
+<div class="footer">
+<p>&copy; 2026 <strong>Desi Rasoi</strong>. All Rights Reserved.</p>
+<p>📞 +92 333-1234567 </p>
+<p>📧 dasirasoireturant@gmail.com</p>
+<p>📍 123 Food Street, Rawalpindi, Pakistan</p>
+<p>
+<a href="https://wa.me/#" target="_blank" class="whatsapp-icon"><i class="fab fa-whatsapp"></i> Whatsapp</a>
+</p>
+</div>
+
+<script>
+    $(document).ready(function(){
+    loadMenu();
+});
+
+// 🔹 Load Menu from DB
+function loadMenu(){
+    $.ajax({
+        url: "/fetch_menu",
+        type: "POST",
+        success: function(res){
+            let dropdown = $("#productname");
+            dropdown.empty();
+
+            if(res.success === 1){
+                dropdown.append('<option value="">Select Dish</option>');
+
+                res.data.forEach(item => {
+                    dropdown.append(
+                        `<option value="${item.name}" data-price="${item.price}">
+                        ${item.dish_name} - Rs.${item.price} (${item.quantity})
+                        </option>`
+                    );
+                });
+            }
+        }
+    });
+}
+
+// 🔹 Set Price
+function setPrice(){
+    let price = $("#productname option:selected").data("price");
+    let qty = $("#quantity").val();
+
+    if(price){
+        $("#price").val(price * qty);
+    }
+}
+
+    function changeQty(val) {
+        let qtyInput = document.getElementById("quantity");
+        let qty = parseInt(qtyInput.value) + val;
+        if (qty >= 1) {
+            qtyInput.value = qty;
+            updateTotal();
+        }
+    }
+
+    function toggleTransaction() {
+        let method = document.getElementById("payment_mtd").value;
+        let field = document.getElementById("transaction_id_field");
+        let input = document.querySelector('[name="trans_id"]');
+
+        if (method === "JazzCash" || method === "EasyPaisa") {
+            field.style.display = "block";
+        } else {
+            field.style.display = "none";
+        }
+    }
+
+    $("form").submit(function(){
+        $(".btn-primary").html("Processing...").prop("disabled", true);
+    });
+</script>
+
 </body>
 </html>

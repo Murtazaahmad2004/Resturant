@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Desi Rasoi | Billing</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<style>
+    /* Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+body {
+    font-family:'Poppins',sans-serif;
+    background:#f9f9f9;
+    padding:20px;
+    color:#333;
+}
+/* NAVBAR */
+.navbar-custom {
+    background-color: #000;
+    padding: 15px 40px;
+    width: 100%;
+    z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.navbar-custom .menu-title {
+    color: white;
+    font-size: 24px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.nav-links {
+    display: flex;
+    gap: 20px;
+}
+.nav-links a {
+    color: white;
+    font-weight: 500;
+    text-decoration: none;
+    transition: 0.3s;
+}
+.nav-links a:hover { color: white }
+
+.custom-container {
+    max-width: 1200px;
+    margin: 100px auto 0 auto; /* leave space for navbar */
+}
+.container { max-width: 1000px; margin: 80px auto 0 auto; background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+table th, table td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+table th { background: #ff5722; color: #fff; }
+table td input { width: 60px; text-align: center; }
+.btn-remove, .btn-print { padding: 8px 16px; border-radius: 6px; font-weight: 500; color: #fff; border: none; cursor: pointer; }
+.btn-remove { background: #c0392b; }
+.btn-remove:hover { background: #e74c3c; }
+.btn-print { background: #27ae60; margin-top: 20px; }
+.btn-print:hover { background: #2ecc71; }
+
+/* ===== FOOTER ===== */
+.footer {
+    background-color: #000000;
+    color: #ccc;
+    padding: 30px 20px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.footer a {
+    color: #c59d5f;
+    margin: 0 5px;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.footer a:hover {
+    color: #fff;
+}
+
+/* WhatsApp Icon */
+.footer .whatsapp-icon {
+    color: #25D366;
+    font-size: 20px;
+    transition: transform 0.3s, color 0.3s;
+}
+
+.footer .whatsapp-icon:hover {
+    transform: scale(1.2);
+    color: #128C7E;
+}
+
+@media(max-width:768px){
+    .nav-links { flex-direction: column; gap: 10px; margin-top: 10px; }
+}
+</style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+<div class="navbar-custom">
+    <div class="menu-title"><i class="fas fa-file-invoice"></i> Billing</div>
+    <div class="nav-links">
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('menu') }}">Menu</a>
+        <a href="{{ url_for('reservation') }}">Reservation</a>
+        <a href="{{ url_for('contact') }}">Contact</a>
+        <a href="{{ url_for('reviews') }}">Reviews</a>
+        <a href="{{ url_for('cart') }}">Cart</a>
+    </div>
+</div>
+
+<div class="container custom-container">
+    <h2 class="text-center">Billing Screen</h2>
+    
+    <!-- Customer Details -->
+    <div class="row">
+        <div class="col-md-6 form-group">
+            <label>Customer Name:</label>
+            <input type="text" id="customerName" class="form-control" placeholder="Enter customer name">
+        </div>
+        <div class="col-md-6 form-group">
+            <label>Table No:</label>
+            <input type="number" id="tableNo" class="form-control" placeholder="Table number">
+        </div>
+    </div>
+
+    <!-- Cart Table -->
+    <h3>Cart Items</h3>
+    <table id="cartTable">
+        <thead>
+            <tr>
+                <th>Dish</th>
+                <th>Price</th>
+                <th>Qty</th>
+                <th>Total</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <h4 class="text-right">Grand Total: Rs. <span id="grandTotal">0</span></h4>
+    <button class="btn-print" onclick="printInvoice()">Print Invoice</button>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <p>&copy; 2026 <strong>Desi Rasoi</strong>. All Rights Reserved.</p>
+  <p>📞 +92 333-1234567 </p>
+  <p>📧 dasirasoireturant@gmail.com</p>
+  <p>📍 123 Food Street, Rawalpindi, Pakistan</p>
+  <p>
+  <a href="https://wa.me/#" target="_blank" class="whatsapp-icon"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+  </p>
+</div>
+
+<script>
+// Load cart from menu page
+let cart = JSON.parse(localStorage.getItem('cartItems')) || [];
+
+function renderCart() {
+    let html = '';
+    let grandTotal = 0;
+    cart.forEach((item,index)=>{
+        let total = item.price * item.quantity;
+        grandTotal += total;
+        html += `<tr>
+            <td>${item.name}</td>
+            <td>Rs. ${item.price.toFixed(2)}</td>
+            <td><input type="number" min="1" value="${item.quantity}" onchange="updateQty(${index}, this.value)"></td>
+            <td>Rs. ${total.toFixed(2)}</td>
+            <td><button class="btn-remove" onclick="removeItem(${index})"><i class="fa fa-trash"></i></button></td>
+        </tr>`;
+    });
+    $("#cartTable tbody").html(html);
+    $("#grandTotal").text(grandTotal.toFixed(2));
+}
+
+function updateQty(index, qty){
+    qty = parseInt(qty);
+    if(qty<1) qty=1;
+    cart[index].quantity = qty;
+    cart[index].total = cart[index].price * qty;
+    localStorage.setItem('cartItems', JSON.stringify(cart));
+    renderCart();
+}
+
+function removeItem(index){
+    cart.splice(index,1);
+    localStorage.setItem('cartItems', JSON.stringify(cart));
+    renderCart();
+}
+
+function printInvoice() {
+    let customerName = $("#customerName").val() || 'N/A';
+    let tableNo = $("#tableNo").val() || 'N/A';
+    let date = new Date();
+    let printWindow = window.open('', '', 'height=600,width=400');
+
+    // Start HTML for printing
+    printWindow.document.write(`
+        <html>
+        <head>
+            <title>Invoice</title>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    margin: 20px;
+                }
+                .header {
+                    text-align: center;
+                    font-weight: bold;
+                    font-size: 18px;
+                }
+                .sub-header {
+                    text-align: center;
+                    font-size: 14px;
+                }
+                .info {
+                    margin: 10px 0;
+                    font-size: 14px;
+                }
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin-top: 10px;
+                }
+                table, th, td {
+                    border: 1px solid black;
+                }
+                th, td {
+                    padding: 5px;
+                    text-align: center;
+                    font-size: 14px;
+                }
+                .total-row td {
+                    font-weight: bold;
+                }
+                .footer {
+                    margin-top: 20px;
+                    text-align: center;
+                    font-size: 14px;
+                }
+            </style>
+        </head>
+        <body>
+            <div class="header">Desi Rasoi</div>
+            <div class="sub-header">A Greate Taste Restaurant</div>
+            <div class="info">Date: ${date.toLocaleString()}</div>
+            <div class="info">Customer: ${customerName}</div>
+            <div class="info">Table No: ${tableNo}</div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Qty</th>
+                        <th>Price (Rs)</th>
+                        <th>Total (Rs)</th>
+                    </tr>
+                </thead>
+                <tbody>
+    `);
+
+    let grandTotal = 0;
+    cart.forEach(item => {
+        let total = item.price * item.quantity;
+        grandTotal += total;
+        let name = item.name.length > 20 ? item.name.substring(0, 20) + "..." : item.name;
+
+        printWindow.document.write(`
+            <tr>
+                <td>${name}</td>
+                <td>${item.quantity}</td>
+                <td>${item.price.toFixed(2)}</td>
+                <td>${total.toFixed(2)}</td>
+            </tr>
+        `);
+    });
+
+    printWindow.document.write(`
+                <tr class="total-row">
+                    <td colspan="3">Grand Total</td>
+                    <td>${grandTotal.toFixed(2)}</td>
+                </tr>
+                </tbody>
+            </table>
+
+            <div class="footer">Thank you for buying with us!</div>
+        </body>
+        </html>
+    `);
+
+    printWindow.document.close();
+    printWindow.print();
+}
+
+$(document).ready(function(){
+
+    // Load cart normally
+    let savedCart = localStorage.getItem('cartItems');
+    cart = savedCart ? JSON.parse(savedCart) : [];
+
+    renderCart();
+
+    // ✅ Clear ONLY after rendering (so page reload shows empty next time)
+    localStorage.removeItem('cartItems');
+});
+</script>
+
+</body>
+</html>
