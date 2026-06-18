@@ -3,36 +3,159 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <script src="{{ url_for('static', filename='script/script.js') }}"></script>
+
     <title>Desi Rasoi | Contact</title>
+
+    <style>
+        body{
+            background:#f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+
+        .navbar-custom{
+            background-color: #000000;
+            color:white;
+            padding:20px;
+            text-align:center;
+            box-shadow:0 2px 10px rgba(0,0,0,0.2);
+        }
+
+        .contact-section{
+            margin-top:50px;
+            margin-bottom:50px;
+        }
+
+        .contact-card{
+            background:white;
+            padding:30px;
+            border-radius:15px;
+            box-shadow:0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .contact-item{
+            margin-bottom:25px;
+            display:flex;
+            align-items:center;
+        }
+
+        .contact-item i{
+            font-size:28px;
+            color: #000000;
+            width:50px;
+        }
+
+        .contact-item h4{
+            margin:0;
+            font-weight:bold;
+        }
+
+        .contact-item p{
+            margin:0;
+            color:#555;
+        }
+
+        .footer{
+            background-color: #000000;
+            color:white;
+            text-align:center;
+            padding:20px;
+        }
+
+        .footer a{
+            color:#f39c12;
+            text-decoration:none;
+        }
+
+        .footer a:hover{
+            color:white;
+        }
+    </style>
 </head>
+
 <body>
-    <div class="navbar">
-        <h2>Contact Us</h2>
+
+    <!-- Navbar -->
+    <div class="navbar-custom">
+        <h1><i class="fas fa-phone"></i> Contact Us</h1>
     </div>
-    <div class="container">
-        <h1>Mobile Number</h1>
-        <h2>+92333-1234567</h2>
-        <h1>WhatsApp</h1>
-        <h2>+92332-0987654</h2>
-        <h1>Email</h1>
-        <h2>dasirasoireturant@gmail.com</h2>
-        <h1>Address</h1>
-        <h2>123 Food Street, Rawalpindi, Pakistan</h2>
+
+    <!-- Contact Section -->
+    <div class="container contact-section">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+
+                <div class="contact-card">
+
+                    <div class="text-center">
+                        <h2>Get In Touch With Desi Rasoi</h2>
+                        <hr>
+                    </div>
+
+                    <div class="contact-item">
+                        <i class="fas fa-mobile-alt"></i>
+                        <div>
+                            <h4>Mobile Number</h4>
+                            <p>+92 333 1234567</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <i class="fab fa-whatsapp"></i>
+                        <div>
+                            <h4>WhatsApp</h4>
+                            <p>+92 332 0987654</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4>Email Address</h4>
+                            <p>desirasoirestaurant@gmail.com</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-item">
+                        <i class="fas fa-location-dot"></i>
+                        <div>
+                            <h4>Address</h4>
+                            <p>123 Food Street, Rawalpindi, Pakistan</p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
     </div>
-<div class="footer">
-    <p>&copy; 2023 Desi Rasoi. All rights reserved.</p>
-    <p>Contact: +92333-1234567 | WhatsApp: +92332-0987654</p>
-    <p>Email: dasirasoireturant@gmail.com</p>
-    <p>Address: 123 Food Street, Rawalpindi, Pakistan</p>
-    <p>Website: www.dasirasoi.com</p>
-    <p>Follow us on social media: 
-        <a href="https://www.facebook.com/dasirasoi">Facebook</a> | 
-        <a href="https://www.instagram.com/dasirasoi">Instagram</a>
-    </p>
-</div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2026 Desi Rasoi. All Rights Reserved.</p>
+
+        <p>
+            <i class="fas fa-phone"></i> +92 333 1234567 |
+            <i class="fab fa-whatsapp"></i> +92 332 0987654
+        </p>
+
+        <p>
+            <i class="fas fa-envelope"></i>
+            desirasoirestaurant@gmail.com
+        </p>
+
+        <p>
+            <i class="fas fa-location-dot"></i>
+            123 Food Street, Rawalpindi, Pakistan
+        </p>
+
+        <p>
+            <a href="#"><i class="fab fa-facebook"></i> Facebook</a> |
+            <a href="#"><i class="fab fa-instagram"></i> Instagram</a>
+        </p>
+    </div>
+
 </body>
 </html>
