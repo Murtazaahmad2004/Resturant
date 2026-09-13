@@ -162,7 +162,7 @@
          color: #128C7E;
          }
    /* ===========================
-   RESPONSIVE DESIGN
+    RESPONSIVE DESIGN
 =========================== */
 /* Mobile */
 @media (max-width:768px){
@@ -315,7 +315,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 const res = await fetch("/fetch_menu", {
                     method: "POST",
                     headers: {
-                        "Content-Type": "application/json"
+                        "Content-Type": "application/json",
+                        // "x-api-key": "MY-SECRET-CODE-IS-CLIENT-KEY@2004"
+                        "x-api-key": "{{ api_key }}"
                     }
                 });
 

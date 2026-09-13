@@ -4,11 +4,36 @@ import sqlite3
 import random
 import string
 import os
+from functools import wraps
 
 app = Flask(__name__)
 CORS(app)
 
-app.secret_key = '123789456'
+# Yahan ab theek tarah se SECRET_KEY environment variable uthega
+app.secret_key = os.environ.get('SECRET_KEY', 'default-fallback-key')
+
+
+# =========================================================
+# API Key Authentication Decorator
+# =========================================================
+
+def require_api_key(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        client_key = request.headers.get('x-api-key')
+        server_key = os.environ.get('API_KEY')
+
+        if server_key and client_key == server_key:
+            return f(*args, **kwargs)
+        elif not server_key:
+            return f(*args, **kwargs)
+        else:
+            return jsonify({
+                "success": 0,
+                "message": "Unauthorized: Invalid or missing API Key"
+            }), 401
+
+    return decorated_function
 
 
 # =========================================================
@@ -16,8 +41,7 @@ app.secret_key = '123789456'
 # =========================================================
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DATABASE = os.path.join(BASE_DIR, 'restaurant.db')
-
+DATABASE = os.path.join(BASE_DIR, "restaurant.db")
 
 # =========================================================
 # Database Connection
@@ -229,7 +253,6 @@ def orders():
         payment_mtd = request.form.get('payment_mtd')
         trans_id = request.form.get('trans_id')
 
-        # Cash payment does not need transaction ID
         if payment_mtd == 'Cash':
             trans_id = 'Nill'
 
@@ -302,8 +325,6 @@ def orders():
             trans_id=trans_id
         )
 
-    # GET request
-
     orderid = generate_random_orderid()
     customerid = generate_random_customerid()
     trans_id = generate_random_trans_id()
@@ -343,7 +364,6 @@ def reservation():
         amount = request.form.get('amount')
         status = request.form.get('status')
 
-        # Cash payment
         if payment == 'Cash':
             trans_id = 'Nill'
 
@@ -417,8 +437,6 @@ def reservation():
             trans_id=trans_id
         )
 
-    # GET request
-
     res_id = generate_random_res_id()
     trans_id = generate_random_trans_id()
 
@@ -491,10 +509,11 @@ def reviews():
 
 
 # =========================================================
-# Add Menu API
+# Add Menu API (Secured)
 # =========================================================
 
 @app.route('/add_menu', methods=['POST'])
+@require_api_key
 def add_menu():
 
     data = request.json
@@ -556,10 +575,11 @@ def add_menu():
 
 
 # =========================================================
-# Get Menu List
+# Get Menu List (Secured)
 # =========================================================
 
 @app.route('/get_menu', methods=['GET'])
+@require_api_key
 def get_menu():
 
     conn = None
@@ -606,10 +626,11 @@ def get_menu():
 
 
 # =========================================================
-# Fetch Menu - Postman
+# Fetch Menu - Postman (Secured)
 # =========================================================
 
 @app.route('/fetch_menu', methods=['POST'])
+@require_api_key
 def fetch_menu():
 
     conn = None
@@ -660,10 +681,11 @@ def fetch_menu():
 
 
 # =========================================================
-# API Menu
+# API Menu (Secured)
 # =========================================================
 
 @app.route('/api/menu', methods=['GET'])
+@require_api_key
 def fetch_api_menu():
 
     conn = None

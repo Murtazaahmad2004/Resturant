@@ -331,7 +331,7 @@
             <!-- Quantity -->
             <div class="input-group">
                 <span class="input-group-addon">Qty</span>
-                <input type="number" id="quantity" name="quantity" value="1" min="1" class="form-control" onchange="updateTotal()">
+                <input type="number" id="quantity" name="quantity" value="1" min="1" class="form-control" oninput="updateTotal()">
             </div>
 
             <!-- Price -->
@@ -389,74 +389,89 @@
 
 <script>
     $(document).ready(function(){
-    loadMenu();
-});
+        loadMenu();
+    });
 
 // 🔹 Load Menu from DB
-function loadMenu(){
-    $.ajax({
-        url: "/fetch_menu",
-        type: "POST",
-        success: function(res){
-            let dropdown = $("#productname");
-            dropdown.empty();
-
-            if(res.success === 1){
-                dropdown.append('<option value="">Select Dish</option>');
-
-                res.data.forEach(item => {
-                    dropdown.append(
-                        `<option value="${item.name}" data-price="${item.price}">
-                        ${item.dish_name} - Rs.${item.price} (${item.quantity})
-                        </option>`
-                    );
-                });
+async function loadMenu() {
+    try {
+        const res = await fetch("/fetch_menu", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "x-api-key": "{{ api_key }}"
             }
+        });
+
+        const data = await res.json();
+        console.log("Order Response:", data);
+
+        let dropdown = $("#productname");
+        dropdown.empty();
+
+        if (data.success === 1) {
+            dropdown.append('<option value="">Select Dish</option>');
+
+            data.data.forEach(item => {
+                dropdown.append(
+                    `<option value="${item.dish_name}" data-price="${item.price}">
+                    ${item.dish_name} - Rs.${item.price} (${item.quantity})
+                    </option>`
+                );
+            });
         }
-    });
+    } catch (error) {
+        console.error("Error loading menu:", error);
+    }
+}
+
+// 🔹 Update Total Price Function
+function updateTotal() {
+    let price = $("#productname option:selected").data("price");
+    let qty = $("#quantity").val();
+
+    if (price && qty) {
+        $("#price").val(price * qty);
+    } else {
+        $("#price").val("");
+    }
 }
 
 // 🔹 Set Price
 function setPrice(){
-    let price = $("#productname option:selected").data("price");
-    let qty = $("#quantity").val();
+    updateTotal();
+}
 
-    if(price){
-        $("#price").val(price * qty);
+function changeQty(val) {
+    let qtyInput = document.getElementById("quantity");
+    let qty = parseInt(qtyInput.value) + val;
+    if (qty >= 1) {
+        qtyInput.value = qty;
+        updateTotal();
     }
 }
 
-    function changeQty(val) {
-        let qtyInput = document.getElementById("quantity");
-        let qty = parseInt(qtyInput.value) + val;
-        if (qty >= 1) {
-            qtyInput.value = qty;
-            updateTotal();
-        }
+function toggleTransaction() {
+    let method = document.getElementById("payment_mtd").value;
+    let field = document.getElementById("transaction_id_field");
+    let input = document.querySelector('[name="trans_id"]');
+
+    if (method === "JazzCash" || method === "EasyPaisa") {
+        field.style.display = "block";
+    } else {
+        field.style.display = "none";
     }
+}
 
-    function toggleTransaction() {
-        let method = document.getElementById("payment_mtd").value;
-        let field = document.getElementById("transaction_id_field");
-        let input = document.querySelector('[name="trans_id"]');
+$("form").submit(function(){
+    $(".btn-primary").html("Processing...").prop("disabled", true);
+});
 
-        if (method === "JazzCash" || method === "EasyPaisa") {
-            field.style.display = "block";
-        } else {
-            field.style.display = "none";
-        }
-    }
-
-    $("form").submit(function(){
-        $(".btn-primary").html("Processing...").prop("disabled", true);
-    });
-    const menuToggle = document.getElementById("menuToggle");
+const menuToggle = document.getElementById("menuToggle");
 const navLinks = document.getElementById("navLinks");
 
 menuToggle.addEventListener("click", () => {
-
     navLinks.classList.toggle("active");
-
     const icon = menuToggle.querySelector("i");
 
     if(navLinks.classList.contains("active")){
@@ -466,21 +481,15 @@ menuToggle.addEventListener("click", () => {
         icon.classList.remove("fa-times");
         icon.classList.add("fa-bars");
     }
-
 });
 
 document.querySelectorAll(".nav-links a").forEach(link=>{
-
     link.addEventListener("click",()=>{
-
         navLinks.classList.remove("active");
-
         const icon = menuToggle.querySelector("i");
         icon.classList.remove("fa-times");
         icon.classList.add("fa-bars");
-
     });
-
 });
 </script>
 
